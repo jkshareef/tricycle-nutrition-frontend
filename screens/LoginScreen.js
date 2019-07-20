@@ -70,19 +70,6 @@ export default class LoginScreen extends Component {
     // clearToken() {
     //     localStorage.setItem('jwt', '')
     //   }
-
-    getToken = async () => {
-    try {
-        const token = await AsyncStorage.getItem('jwt');
-        if (token !== null) {
-        // We have data!!
-        this.setState({async: token})
-        // return token
-        }
-    } catch (error) {
-        // Error retrieving data
-    }
-    }
       
 
   
