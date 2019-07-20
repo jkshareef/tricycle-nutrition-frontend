@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, AsyncStorage} from 'react-native';
+import { StyleSheet, Text, View, Button, AsyncStorage} from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 export default class DailyScreen extends Component {
     render() {
@@ -14,7 +15,10 @@ export default class DailyScreen extends Component {
           });
 
         return (
-
+            <Button
+                title="Go to Home"
+                onPress={() => this.props.navigation.navigate('Home')}
+                />
         )
     }
 }

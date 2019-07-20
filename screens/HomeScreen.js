@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, Button, AsyncStorage} from 'react-native'
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 export default class HomeScreen extends Component {
 
@@ -56,7 +57,10 @@ export default class HomeScreen extends Component {
         return(
             <View>
               <Text>Today</Text>
-             
+              <Button
+                title="Daily"
+                onPress={() => this.props.navigation.navigate('Daily')}
+              />
             </View>
            
         )

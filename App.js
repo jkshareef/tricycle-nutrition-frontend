@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen'
+import DailyScreen from './screens/DailyScreen'
 import { createStackNavigator, createAppContainer } from "react-navigation";
 
 
@@ -45,11 +46,16 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
       }
       }
 
-      const AppNavigator = createStackNavigator({
+      const AppNavigator = createStackNavigator(
+        {
         Home: HomeScreen,
-        Daily: DailyScreen
+        Daily: DailyScreen,
+        },
+        {
+          initialRouteName: "Home"
+        }
 
-      });
+      );
 
       const Login = createStackNavigator({
         Login: {
