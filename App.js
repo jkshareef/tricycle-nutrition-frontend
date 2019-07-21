@@ -4,6 +4,8 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen'
 import DailyScreen from './screens/DailyScreen'
 import { createStackNavigator, createAppContainer } from "react-navigation";
+import { mapping, light as lightTheme } from '@eva-design/eva';
+import { ApplicationProvider, Layout } from 'react-native-ui-kitten';
 
 
 
@@ -67,7 +69,9 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 
       export default class App extends Component {
         render() {
-          return <AppContainer />;
+          return(
+              <AppContainer />
+          ) 
         }
       }
 

@@ -9,11 +9,18 @@
     "react-devtools": "react-devtools"
   },
   "dependencies": {
+    "@eva-design/eva": "^1.0.1",
+    "@nivo/bar": "^0.59.2",
+    "@nivo/sunburst": "^0.59.1",
+    "art": "^0.10.3",
+    "d3": "^5.9.7",
+    "d3-shape": "^1.3.5",
     "expo": "^33.0.0",
     "formik": "^1.5.8",
     "react": "16.8.3",
     "react-dom": "^16.8.6",
     "react-native": "https://github.com/expo/react-native/archive/sdk-33.0.0.tar.gz",
+    "react-native-ui-kitten": "^4.1.0",
     "react-native-web": "^0.11.4",
     "react-navigation": "^3.11.1"
   },

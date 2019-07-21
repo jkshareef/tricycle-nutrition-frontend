@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Button, AsyncStorage} from 'react-native'
+import {View, Text, StyleSheet, Button, AsyncStorage, ART} from 'react-native'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 export default class HomeScreen extends Component {
@@ -50,13 +50,34 @@ export default class HomeScreen extends Component {
             },
           });
 
+          // const {
+          //   Surface,
+          //   Group,
+          //   Shape,
+          // } = ART;
+          
+          // const ReactNativeART = 
+          //     <View>
+          //       <Surface width={500} height={500}>
+          //         <Group x={100} y={0}>
+          //           <Shape
+          //             d="M10 80 C 40 10, 65 10, 95 80 S 150 150, 180 80"
+          //             stroke="#000"
+          //             strokeWidth={1}/>
+          //         </Group>
+          //       </Surface>
+          //     </View>
+          
+            
+          
+
          
 
 
 
         return(
             <View>
-              <Text>Today</Text>
+              {/* {ReactNativeART} */}
               <Button
                 title="Daily"
                 onPress={() => this.props.navigation.navigate('Daily')}
