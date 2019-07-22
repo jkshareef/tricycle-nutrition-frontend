@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput, View, Button, AsyncStorage} from 'react-native';
+import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 
 
@@ -31,8 +32,8 @@ export default class LoginScreen extends Component {
             if(json && json.jwt) {
                 this.saveToken(json.jwt)
             }
-        })
-        .catch(error => console.log('Error: ', error))
+        }, () => this.props.navigation.navigate('Home'))
+       .catch(error => console.log('Error: ', error))
     }
 
     onPressSignup = () => {
@@ -50,9 +51,13 @@ export default class LoginScreen extends Component {
             if(json && json.jwt) {
                 this.saveToken(json.jwt)
             }
-        })
+        }, () => this.props.navigation.navigate("Home"))
         .catch(error => console.log('Error: ', error))
     }
+
+    // goHome = () => {
+    //     this.props.navigation.navigate('Home')
+    // }
 
     
     // saveToken() {
@@ -81,11 +86,14 @@ export default class LoginScreen extends Component {
                 height: 40,
                 margin: 2,
                 backgroundColor: 'white'
-            } 
+            },
+            container: {
+                backgroundColor: '#f57e42'
+            }
         })
         
         return (
-            <View style={{padding:10}}>
+            <View style={styles.container}>
               <TextInput
               style={styles.textField}
               placeholder="username"
@@ -100,7 +108,10 @@ export default class LoginScreen extends Component {
               value={this.state.password}
               onChangeText={(text) => this.setState({password: text})}/>
                 <View>
-                    <Button 
+                    <Button
+                    title="Go Home" 
+                    onPress={() => this.props.navigation.navigate("Home")}/>
+                    <Button
                     onPress={this.onPressLogin}
                     title="Login"/>
                     <Button 

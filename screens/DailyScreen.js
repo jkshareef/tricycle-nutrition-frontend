@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { StyleSheet, Text, View, FlatList, Button, AsyncStorage} from 'react-native';
+import { StyleSheet, SectionList, Text, View, FlatList, Button, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 // import compounds from '../helpers/compounds'
 
@@ -7,6 +7,10 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 export default class DailyScreen extends Component {
 
+
+  static navigationOptions= {
+    title: "Daily"
+  }
    
     getToken = async () => {
       try {
@@ -22,7 +26,7 @@ export default class DailyScreen extends Component {
           // Error retrieving data
       }
       }
-    componentWillUpdate() {
+    componentDidMount() {
       let token = this.getToken()
       const config = {
         headers: {
@@ -31,37 +35,37 @@ export default class DailyScreen extends Component {
         }
         
       }
-      fetch('http://localhost:3000/api/v1/profile', config)
-      .then(resp = resp.json())
-      // .then(json => {
-      //   this.setState({meals: json.user.meals})
-      // })
+      fetch('http://localhost:3000/api/v1/food', config)
+      .then(resp => resp.json())
+      .then(json => {
+        this.setState({compoundAmounts: json})
+      })
+
+      
     }
     render() {
 
-        const styles = StyleSheet.create({
-            container: {
-              flex: 1,
-              flexDirection: 'column',
-              backgroundColor: '#f57e42',
-              alignItems: 'flex-start',
-              justifyContent: 'flex-start',
-              paddingTop: 22
-            },
-            item: {
-              marginTop: 10,
-              fontSize: 18,
-              height: 44,
-            },
-            baseText: {
-              fontFamily: 'Cochin',
-            },
-            titleText: {
-              fontSize: 20,
-              fontWeight: 'bold',
-            },
-          });
-
+      const styles = StyleSheet.create({
+        container: {
+         flex: 1,
+         paddingTop: 22
+        },
+        sectionHeader: {
+          paddingTop: 2,
+          paddingLeft: 10,
+          paddingRight: 10,
+          paddingBottom: 2,
+          fontSize: 14,
+          fontWeight: 'bold',
+          backgroundColor: 'rgba(247,247,247,1.0)',
+        },
+        item: {
+          padding: 10,
+          fontSize: 18,
+          height: 44,
+        },
+      })
+      
           const compounds = [
             "protein", "fiber", "calcium","iron", "iron", "manganese" ,
             "phosphorus", "potassium", "sodium", "zinc", "copper", 
@@ -75,52 +79,34 @@ export default class DailyScreen extends Component {
 
         return (
           <View style={styles.container}>
-          {/* <DailyStack /> */}
-          <FlatList
-          data={[
-            {key: "protein"},
-            {key: "fiber"},
-            {key: "calcium"},
-            {key: "iron"},
-            {key:  "manganese"},
-            {key: "phosphorus"},
-            {key:  "potassium"},
-            {key: "sodium"},
-            {key: "zinc"},
-            {key: "copper"},
-            {key: "selenium"},
-            {key: "vitamin_a"},
-            {key:  "vitamin_d"},
-            {key: "vitamin_c"},
-            {key: "thiamin"},
-            {key: "riboflavin"},
-            {key: "niacin"},
-            {key: "vitamin_b5"},
-            {key: "vitamin_b6"},
-            {key: "choline"},
-            {key: "vitamin_k"},
-            {key: "folate"}
+          <SectionList
+          sections={[
+            {title: 'Most Recent', data: ['protein', "fiber", "calcium", "iron",
+          "manganese", "phosphorus", "potassium", "sodium", "zinc", "copper",
+        "selenium", "vitamin_a", "vitamin_d", "vitamin_c", "thiamin",
+      "riboflavin", "niacin", "vitamin_b5", "vita,min_b6", "choline", "vitamin_k", "folate"]},
+            // {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
           ]}
           renderItem={({item}) =>
-          
-            <View>
-              
-              <Text style={styles.titleText}>
-                {item.key}  
-              </Text>
-              <Text>
-                Hello
-            </Text>
-            
+          <View>
+            <Text style={styles.item}>{item}
+          <Text>
+
+          </Text>
+          </Text>
+
             </View>
-            
-        }
+          }
+          renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+          keyExtractor={(item, index) => index}
         />
-            <Button
+        <Button
                 title="Go to Home"
                 onPress={() => this.props.navigation.navigate('Home')}
                 />
-          </View>
-        )
+      </View>
+      );
     }
-}
+  }
+  
+        
