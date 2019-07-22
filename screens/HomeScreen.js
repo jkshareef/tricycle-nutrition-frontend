@@ -60,7 +60,7 @@ export default class HomeScreen extends Component {
     const config = {
       method: 'POST',
       headers: {
-        'Authorization': 'Bearer ' + token,
+        Authorization: 'Bearer ' + token,
         'Content-Type' : 'application/json'
       }
     }

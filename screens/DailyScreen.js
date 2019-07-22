@@ -7,6 +7,10 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 
 export default class DailyScreen extends Component {
 
+  state = {
+    compoundData: '',
+    recentDay: ''
+  }
 
   static navigationOptions= {
     title: "Daily"
@@ -27,6 +31,7 @@ export default class DailyScreen extends Component {
       }
       }
     componentDidMount() {
+     
       let token = this.getToken()
       const config = {
         headers: {
@@ -35,10 +40,12 @@ export default class DailyScreen extends Component {
         }
         
       }
-      fetch('http://localhost:3000/api/v1/food', config)
+      fetch(`http://localhost:3000/api/v1/food/`, config)
       .then(resp => resp.json())
       .then(json => {
-        this.setState({compoundAmounts: json})
+        this.setState({
+          compoundData: json.data,
+          recentDay: json.day})
       })
 
       
@@ -77,21 +84,26 @@ export default class DailyScreen extends Component {
           //   {key: compound}
           // })
 
+
+          const mealCompounds = () => {
+            this.state.compoundData.keys().map((compound) => {
+              return compound
+            })
+          
+          }
+
         return (
           <View style={styles.container}>
           <SectionList
           sections={[
-            {title: 'Most Recent', data: ['protein', "fiber", "calcium", "iron",
-          "manganese", "phosphorus", "potassium", "sodium", "zinc", "copper",
-        "selenium", "vitamin_a", "vitamin_d", "vitamin_c", "thiamin",
-      "riboflavin", "niacin", "vitamin_b5", "vita,min_b6", "choline", "vitamin_k", "folate"]},
+            {title: this.state.recentDay, data: mealCompounds},]}
             // {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
-          ]}
+          
           renderItem={({item}) =>
           <View>
             <Text style={styles.item}>{item}
           <Text>
-
+            
           </Text>
           </Text>
 
