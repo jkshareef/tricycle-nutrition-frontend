@@ -77,7 +77,7 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 
                 },
                 {
-                  initialRouteName: "Home"
+                  initialRouteName: "Login"
                 }
 
               );

@@ -32,7 +32,8 @@ export default class LoginScreen extends Component {
             if(json && json.jwt) {
                 this.saveToken(json.jwt)
             }
-        }, () => this.props.navigation.navigate('Home'))
+        })
+        .then(this.props.navigation.navigate('Home'))
        .catch(error => console.log('Error: ', error))
     }
 
@@ -75,27 +76,55 @@ export default class LoginScreen extends Component {
     // clearToken() {
     //     localStorage.setItem('jwt', '')
     //   }
+
+    getToken = async () => {
+        try {
+            const token = await AsyncStorage.getItem('jwt');
+            if (token !== null) {
+            // We have data!!
+            this.setState({token: token})
+            return token
+    
+            } else {
+             null
+            }
+        } catch (error) {
+            // Error retrieving data
+        }
+        }
       
 
   
 
     render() {
         const styles = StyleSheet.create({
+       
+            container: {
+                flex: 1,
+                backgroundColor: '#f57e42'
+            }
+            ,
             textField : {
                 fontSize: 20,
                 height: 40,
                 margin: 2,
                 backgroundColor: 'white'
             },
-            container: {
-                backgroundColor: '#f57e42'
+            textFieldUser: {
+                fontSize: 20,
+                height: 40,
+                margin: 2,
+                backgroundColor: 'white',
+                marginTop: 40
+                
             }
-        })
+           })
+        
         
         return (
             <View style={styles.container}>
               <TextInput
-              style={styles.textField}
+              style={styles.textFieldUser}
               placeholder="username"
               value={this.state.username}
               name="username"
@@ -107,7 +136,7 @@ export default class LoginScreen extends Component {
               secureTextEntry={true}
               value={this.state.password}
               onChangeText={(text) => this.setState({password: text})}/>
-                <View>
+                
                     <Button
                     title="Go Home" 
                     onPress={() => this.props.navigation.navigate("Home")}/>
@@ -118,9 +147,7 @@ export default class LoginScreen extends Component {
                     onPress={this.onPressSignup}
                     title="Sign up"/>
                     <Text>Don't have an account? Click here to sign-up</Text>
-
-                </View>
-
+                
             </View>
         )
     }

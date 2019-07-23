@@ -8,15 +8,16 @@ export default class HomeScreen extends Component {
 
   state = {
     isLoggedIn: '',
-    query: ''
+    query: '', 
+    token: ''
   }
 
   static navigationOptions= {
     title: "Home"
   }
 
-  componentWillMount() {
-    this.setState({isLoggedIn: this.getToken()?true:false, token: this.getToken()})
+  componentDidMount() {
+    this.setState({isLoggedIn: this.getToken()?true:false})
   }
 
 
@@ -38,7 +39,7 @@ export default class HomeScreen extends Component {
 
 
   clearToken() {
-    AsyncStorage.setItem('jwt', '')
+    AsyncStorage.removeItem('jwt')
 
   }
 
@@ -55,7 +56,7 @@ export default class HomeScreen extends Component {
     let yyyy = today.getFullYear();
 
     today = mm + '-' + dd + '-' + yyyy;
-    const token = this.getToken()
+    const token = this.state.token
     const query = this.state.query
     const config = {
       method: 'POST',
