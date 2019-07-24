@@ -13,9 +13,7 @@ export default class DailyScreen extends Component {
     super()
     this.state = {
       compoundData: null,
-      compoundNames: null,
-      recentDay: '',
-      token: ''
+      days: '',
     }
   }
   
@@ -29,7 +27,6 @@ export default class DailyScreen extends Component {
           const token = await AsyncStorage.getItem('jwt');
           if (token !== null) {
           // We have data!!
-          this.setState({token: token})
 
           return token
           } else {
@@ -53,18 +50,18 @@ export default class DailyScreen extends Component {
         }
         
       }
-      fetch("http://localhost:3000/api/v1/food", config)
+      fetch(`http://localhost:3000/api/v1/food/day`, config)
       .then(resp => resp.json())
       .then(json => {
         this.setState({
           compoundData: json.data,
-          recentDay: json.day
+          days: json.day
         })
       })
       }
      
 
-      compoundNames = () => {
+      compounds = () => {
         result = []
         if (this.state.compoundData !== null) {
           for (let i = 0; i < Object.keys(this.state.compoundData).length; i++) {
@@ -159,10 +156,15 @@ export default class DailyScreen extends Component {
 
           
         return (
+          
           <View style={styles.container}>
+            <Button
+                title="Go to Home"
+                onPress={() => this.props.navigation.navigate('Home')}
+                />
           <SectionList
           sections={[
-            {title: this.state.recentDay, data: this.compoundNames()},]}
+            {title: this.state.days, data: this.compounds()},]}
             // {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
           
           renderItem={({item}) =>
@@ -178,10 +180,7 @@ export default class DailyScreen extends Component {
           renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
           keyExtractor={(item, index) => index}
         />
-        <Button
-                title="Go to Home"
-                onPress={() => this.props.navigation.navigate('Home')}
-                />
+        
       </View>
       );
     }

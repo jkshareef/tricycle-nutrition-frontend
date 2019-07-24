@@ -67,11 +67,6 @@ export default class HomeScreen extends Component {
     }
     fetch(`http://localhost:3000/api/v1/add/${query}`, config)
     .then(resp=>resp.json())
-    .then(json => {
-      this.setState({
-        data: json
-      })
-    })
     .catch(error => console.log("Error: ", error))
   }
 
@@ -89,6 +84,9 @@ export default class HomeScreen extends Component {
               margin: 2,
               backgroundColor: 'white'
           },
+          button : {
+            flex: 2
+          }
           });
 
           // const {
@@ -108,17 +106,11 @@ export default class HomeScreen extends Component {
           //         </Group>
           //       </Surface>
           //     </View>
-          
-            
-          
-
-         
-
-
 
         return(
             <View>
               {/* {ReactNativeART} */}
+              
               <TextInput style={styles.textField}
               placeholder="Add Meal"
               value={this.state.query}
@@ -129,14 +121,14 @@ export default class HomeScreen extends Component {
               onPress={this.onAddMeal}/>
               <Button
                 title="Daily"
-                onPress={() => {this.props.navigation.navigate('Daily', 
-                {data: this.state.data})}}
+                onPress={() => {this.props.navigation.navigate('Daily')}}
               />
+              <Button 
+              title="Weekly"
+              onPress={() => {this.props.navigation.navigate("Weekly")}}/>
               <Button
                 title="Login"
-                onPress={() => {this.props.navigation.navigate('Login', 
-                {data: this.state.data})}}
-              />
+                onPress={() => {this.props.navigation.navigate('Login')}}/>
             </View>
            
         )

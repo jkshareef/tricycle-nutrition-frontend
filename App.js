@@ -3,6 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen'
 import DailyScreen from './screens/DailyScreen'
+import WeeklyScreen from './screens/WeeklyScreen'
 import { createStackNavigator, createAppContainer } from "react-navigation";
 // import { mapping, light as lightTheme } from '@eva-design/eva';
 // import { ApplicationProvider, Layout } from 'react-native-ui-kitten';
@@ -73,7 +74,8 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
                 {
                   Login: LoginScreen,
                   Home: HomeScreen,
-                  Daily: DailyScreen
+                  Daily: DailyScreen,
+                  Weekly: WeeklyScreen
 
                 },
                 {
