@@ -5,6 +5,7 @@ import HomeScreen from './screens/HomeScreen'
 import DailyScreen from './screens/DailyScreen'
 import WeeklyScreen from './screens/WeeklyScreen'
 import { createStackNavigator, createAppContainer } from "react-navigation";
+import { Provider as PaperProvider } from 'react-native-paper';
 // import { mapping, light as lightTheme } from '@eva-design/eva';
 // import { ApplicationProvider, Layout } from 'react-native-ui-kitten';
 
@@ -87,7 +88,10 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
               const AppContainer = createAppContainer(LoginNavigator)
         
           return(
-              <AppContainer />
+            <PaperProvider>
+                <AppContainer />     
+            </PaperProvider>
+             
           ) 
         }
       }

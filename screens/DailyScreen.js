@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, SectionList, Text, View, FlatList, Button, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { List, Checkbox } from 'react-native-paper';
 
 
 
@@ -54,7 +55,7 @@ export default class DailyScreen extends Component {
       .then(resp => resp.json())
       .then(json => {
         this.setState({
-          compoundData: json.data,
+          compoundData: json,
           days: json.day
         })
       })
@@ -62,33 +63,37 @@ export default class DailyScreen extends Component {
      
 
       compounds = () => {
-        result = []
-        if (this.state.compoundData !== null) {
-          for (let i = 0; i < Object.keys(this.state.compoundData).length; i++) {
-            result.push({
-              name: this.state.compoundData[Object.keys(this.state.compoundData)[i]].name, 
-              amount: this.state.compoundData[Object.keys(this.state.compoundData)[i]].amount,
-              rdv: this.state.compoundData[Object.keys(this.state.compoundData)[i]].rdv,
-              description: this.state.compoundData[Object.keys(this.state.compoundData)[i]].description
-            })
-            }
-            return result
-          } else {
-            return ["Loading..."]
-        }
-       }
-
-       compoundAmounts = () => {
-        result = []
-        if (this.state.compoundData !== null) {
-          for (let i = 0; i < Object.keys(this.state.compoundData).length; i++) {
-            result.push(this.state.compoundData[Object.keys(this.state.compoundData)[i]].amount)
+        // console.log(this.state.compoundData.total)
+          return Object.values(this.state.compoundData.total).map((compound) => {
+          // for (let i = 0; i < Object.keys(this.state.compoundData.total).length; i++) {
+            return (<List.Item
+            title={compound.name}
+            description={`${compound.amount} /${compound.rdv} \n${compound.description}`}
+            // left={props => <List.Icon {...props} icon="arrow_right" />}
+            />)
+          // result.push({
+          //   name: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].name, 
+          //   amount: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].amount,
+          //   rdv: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].rdv,
+          //   description: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].description
+          // })
+             })
           }
-          return result
-        } else {
-          return
-        }
-       }
+          
+
+       
+
+      //  compoundAmounts = () => {
+      //   result = []
+      //   if (this.state.compoundData !== null) {
+      //     for (let i = 0; i < Object.keys(this.state.compoundData.total).length; i++) {
+      //       result.push(this.state.compoundData[Object.keys(this.state.compoundData)[i]].amount)
+      //     }
+      //     return result
+      //   } else {
+      //     return
+      //   }
+      //  }
     
       
      
@@ -162,7 +167,9 @@ export default class DailyScreen extends Component {
                 title="Go to Home"
                 onPress={() => this.props.navigation.navigate('Home')}
                 />
-          <SectionList
+          {this.state.compoundData === null?null:this.compounds()}
+            
+          {/* <SectionList
           sections={[
             {title: this.state.days, data: this.compounds()},]}
             // {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
@@ -179,7 +186,7 @@ export default class DailyScreen extends Component {
           
           renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
           keyExtractor={(item, index) => index}
-        />
+        /> */}
         
       </View>
       );
