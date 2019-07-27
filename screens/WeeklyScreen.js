@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, SectionList, Text, View, FlatList, Button, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+import { ToggleButton } from 'react-native-paper';
 
 export default class WeeklyScreen extends Component {
     constructor(props) {
@@ -49,7 +50,7 @@ export default class WeeklyScreen extends Component {
           .then(resp => resp.json())
           .then(json => {
             this.setState({
-              compoundData: json.data,
+              compoundData: json,
               days: json.day
             })
           })
@@ -59,12 +60,12 @@ export default class WeeklyScreen extends Component {
           compounds = () => {
             result = []
             if (this.state.compoundData !== null) {
-              for (let i = 0; i < Object.keys(this.state.compoundData).length; i++) {
+              for (let i = 0; i < Object.keys(this.state.compoundData.total).length; i++) {
                 result.push({
-                  name: this.state.compoundData[Object.keys(this.state.compoundData)[i]].name, 
-                  amount: this.state.compoundData[Object.keys(this.state.compoundData)[i]].amount,
-                  rdv: this.state.compoundData[Object.keys(this.state.compoundData)[i]].rdv,
-                  description: this.state.compoundData[Object.keys(this.state.compoundData)[i]].description
+                  name: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].name, 
+                  amount: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].amount,
+                  rdv: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].rdv,
+                  description: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].description
                 })
                 }
                 return result
@@ -118,7 +119,7 @@ export default class WeeklyScreen extends Component {
                 renderItem={({item}) =>
                     <View>
                         <Text style={styles.item}>{item.name} </Text>
-                        <Text style={styles.subText}>{item.amount}/{item.rdv}</Text>
+                        <Text style={styles.subText}>{item.amount}/{item.rdv}{item.units}</Text>
                         <Text style={styles.subText}>{item.description}</Text>
                     </View>
             }

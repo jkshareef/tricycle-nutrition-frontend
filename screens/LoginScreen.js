@@ -17,6 +17,13 @@ export default class LoginScreen extends Component {
         }
     }
 
+    static navigationOptions= {
+        title: "Login",
+        headerStyle: {
+          backgroundColor: '#023618',
+        },
+      }
+
     onPressLogin = () => {
         const username = this.state.username
         const password = this.state.password
@@ -101,7 +108,7 @@ export default class LoginScreen extends Component {
        
             container: {
                 flex: 1,
-                backgroundColor: '#f57e42'
+                backgroundColor: '#F6F4F3'
             }
             ,
             textField : {
