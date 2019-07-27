@@ -1,10 +1,14 @@
 import React, {Component} from 'react';
+import {StyleSheet, Text, View} from 'react-native'
 import { List, Checkbox } from 'react-native-paper';
 
 
 export default class RecentMeal extends Component {
     constructor(props) {
         super(props)
+        this.state = {
+            expanded: false
+        }
     }
 
 
@@ -14,32 +18,58 @@ export default class RecentMeal extends Component {
     //     console.log(this.props.meals.data)
     // }
 
-    handlePress = () => {
-        this.props.handlePress
-    }
+    handlePress = () =>
+    this.setState({
+      expanded: !this.state.expanded
+    });
 
     handleExpanded = () => {
         this.props.expanded
     }
 
     render() {
+
+        const styles = StyleSheet.create({
+           
+        })
         
         return(
-        Object.values(this.props.meals.data).map((food, index) => 
+        this.props.meals.data.map((foodHash, index) => 
+        
           <List.Accordion
           key = {index}
-          title={food}
+          title={Object.keys(foodHash)[0]}
           style={{width: 400, alignItems: "center"}}
           left={props => <List.Icon {...props} icon="restaurant" />}
-          expanded={true}
+          expanded={this.state.expanded}
+          onPress={this.handlePress}
           
         >
-          {food.map((compound, idx) => 
-          <List.Item
-            key= {idx} 
-            title={compound.name}
-            description={`${compound.amount}/${compound.rdv} \n${compound.description}`}
-              />)}
+        
+          {[].concat.apply([], Object.values(foodHash)).map((compound, idx) => 
+            <List.Item
+                key= {idx} 
+                titleStyle={{fontSize: 28}}
+                title={compound.name}
+                description={({
+                    ellipsizeMode,
+                    color: descriptionColor,
+                    fontSize,
+                  }) => (
+                <View>
+                    <Text
+                    numberOfLines={1}
+                    ellipsizeMode={ellipsizeMode}>
+                    {compound.amount}/{compound.rdv}{compound.units}
+                    </Text>
+                    <Text
+                    numberOfLines={2}
+                    ellipsizeMode={ellipsizeMode}>
+                        {compound.description}
+                    </Text>
+                </View>
+                  )}
+                />)}
           </List.Accordion>
         )
         )

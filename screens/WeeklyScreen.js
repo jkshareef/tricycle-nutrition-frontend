@@ -63,7 +63,7 @@ export default class WeeklyScreen extends Component {
               for (let i = 0; i < Object.keys(this.state.compoundData.total).length; i++) {
                 result.push({
                   name: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].name, 
-                  amount: this.state.compoundData.toal[Object.keys(this.state.compoundData.total)[i]].amount,
+                  amount: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].amount,
                   rdv: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].rdv,
                   description: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].description
                 })
@@ -119,7 +119,7 @@ export default class WeeklyScreen extends Component {
                 renderItem={({item}) =>
                     <View>
                         <Text style={styles.item}>{item.name} </Text>
-                        <Text style={styles.subText}>{item.amount}/{item.rdv}</Text>
+                        <Text style={styles.subText}>{item.amount}/{item.rdv}{item.units}</Text>
                         <Text style={styles.subText}>{item.description}</Text>
                     </View>
             }

@@ -14,7 +14,7 @@ export default class HomeScreen extends Component {
       compoundData: null,
       foodNames: null,
       foodItems: null,
-      expanded: false
+      expanded: true
       
     
     }
@@ -31,10 +31,11 @@ export default class HomeScreen extends Component {
 
   async componentDidMount() {
     this.getRecent()
-    this.getFoodNames()
+    // this.getFoodNames()
     }
 
   async getRecent() {
+    debugger
     const token = await this.getToken()
     const config = {
         headers: {
@@ -54,19 +55,19 @@ export default class HomeScreen extends Component {
   
   
 
-  getFoodNames = () => {
+  // getFoodNames = () => {
     
-    const config = {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }
-    fetch("http://localhost:3000/foodnames", config)
-    .then(resp => resp.json())
-    .then(json => {
-      return json
-    })
-  }
+  //   const config = {
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     }
+  //   }
+  //   fetch("http://localhost:3000/foodnames", config)
+  //   .then(resp => resp.json())
+  //   .then(json => {
+  //     return json
+  //   })
+  // }
   
 
   getToken = async () => {
@@ -125,7 +126,10 @@ export default class HomeScreen extends Component {
     .then(this.setState({
       query: '',
     }))
-    .then(this.getRecent())
+    .then(json => {
+
+    })
+    .then(()=> this.getRecent())
     .catch(error => console.log("Error: ", error))
   }
 
@@ -171,7 +175,7 @@ export default class HomeScreen extends Component {
           key= {index} 
           title={compound.name}
           description={`${compound.amount}/${compound.rdv} \n${compound.description}`}
-          // left={props => <List.Icon {...props} icon="arrow_right" />}
+          
       />    
         )
       }
@@ -187,19 +191,19 @@ export default class HomeScreen extends Component {
       )
     }
 
-    searchedFoodNames = (text) => {
-      this.setState({
-        query: text
-      })
+    // searchedFoodNames = (text) => {
+    //   this.setState({
+    //     query: text
+    //   })
       
-      let foodNames = this.getFoodNames().food_item
-      let names = foodNames.filter((foodName) => {
-        return foodName.name.toLowerCase().includes?(text)
-      })
-      this.setState({
-        filteredNames: names
-      })
-    }
+    //   let foodNames = this.getFoodNames().food_item
+    //   let names = foodNames.filter((foodName) => {
+    //     return foodName.name.toLowerCase().includes?(text)
+    //   })
+    //   this.setState({
+    //     filteredNames: names
+    //   })
+    // }
        
 
     render() {
@@ -243,8 +247,8 @@ export default class HomeScreen extends Component {
 
         
         let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-          
-    
+          // console.log("In render")
+          // console.log(this.state.compoundData)
 
         return(
             <View style={styles.container}>
@@ -259,22 +263,22 @@ export default class HomeScreen extends Component {
                   onPress={this.handlePress}
                 >
                   
-                  {this.state.compoundData? <RecentMeal meals={this.state.compoundData}/> : null}
+                  {this.state.compoundData? <RecentMeal meals={this.state.compoundData}/>:null}
                   
                 </List.Accordion>
     
               </List.Section>
-              <View>
+              {/* <View> */}
                 <TextInput style={styles.textField}
                 placeholder="Add Meal"
                 value={this.state.query}
                 onChangeText={(text) => this.setState({
                   query: text})}
                 />
-                <ListView
+                {/* <ListView
                       dataSource={ds.cloneWithRows(this.state.filteredNames)}
-                renderRow={this.renderFoodNames} />
-              </View>
+                renderRow={this.renderFoodNames} /> */}
+              {/* </View> */}
               
               <TouchableHighlight onPress={this.onAddMeal} underlayColor="white">
                 <View style={styles.button}>

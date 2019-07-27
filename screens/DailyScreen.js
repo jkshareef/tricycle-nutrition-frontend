@@ -64,11 +64,12 @@ export default class DailyScreen extends Component {
 
       compounds = () => {
         // console.log(this.state.compoundData.total)
-          return Object.values(this.state.compoundData.total).map((compound) => {
+          return Object.values(this.state.compoundData.total).map((compound, index) => {
           // for (let i = 0; i < Object.keys(this.state.compoundData.total).length; i++) {
             return (<List.Item
+            key = {index}
             title={compound.name}
-            description={`${compound.amount} /${compound.rdv} \n${compound.description}`}
+            description={`${compound.amount} /${compound.rdv}${compound.units} \n${compound.description}`}
             // left={props => <List.Icon {...props} icon="arrow_right" />}
             />)
           // result.push({
