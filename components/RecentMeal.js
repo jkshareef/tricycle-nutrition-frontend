@@ -1,15 +1,22 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View} from 'react-native'
-import { List, Checkbox } from 'react-native-paper';
+import {StyleSheet, View} from 'react-native'
+import { List, Checkbox, Text, Modal, Portal, Button, Provider } from 'react-native-paper';
+
 
 
 export default class RecentMeal extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            expanded: false
+            expanded: false,
+            visible: false
         }
     }
+
+    
+    
+    //   _showModal = () => this.setState({ visible: true });
+    //   _hideModal = () => this.setState({ visible: false });
 
 
 
@@ -28,10 +35,8 @@ export default class RecentMeal extends Component {
     }
 
     render() {
-
-        const styles = StyleSheet.create({
-           
-        })
+        // const { visible } = this.state;
+        
         
         return(
         this.props.meals.data.map((foodHash, index) => 
@@ -49,24 +54,28 @@ export default class RecentMeal extends Component {
           {[].concat.apply([], Object.values(foodHash)).map((compound, idx) => 
             <List.Item
                 key= {idx} 
-                titleStyle={{fontSize: 28}}
+                titleStyle={{fontSize: 20}}
                 title={compound.name}
                 description={({
                     ellipsizeMode,
-                    color: descriptionColor,
-                    fontSize,
+                    
                   }) => (
                 <View>
+                    
                     <Text
                     numberOfLines={1}
-                    ellipsizeMode={ellipsizeMode}>
-                    {compound.amount}/{compound.rdv}{compound.units}
+                    >
+                    {`${compound.amount}/${compound.rdv}${compound.units} RDV`}
                     </Text>
-                    <Text
-                    numberOfLines={2}
+                    <Text style={{marginTop: 10}}
+                  
                     ellipsizeMode={ellipsizeMode}>
                         {compound.description}
                     </Text>
+                    
+                    
+                    
+                    
                 </View>
                   )}
                 />)}

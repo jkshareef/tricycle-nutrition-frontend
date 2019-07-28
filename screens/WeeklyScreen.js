@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { StyleSheet, SectionList, Text, View, FlatList, Button, AsyncStorage} from 'react-native';
+import { StyleSheet, SectionList, View, Text, FlatList, Button, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { ToggleButton } from 'react-native-paper';
+import { ToggleButton} from 'react-native-paper';
 
 export default class WeeklyScreen extends Component {
     constructor(props) {
@@ -65,7 +65,9 @@ export default class WeeklyScreen extends Component {
                   name: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].name, 
                   amount: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].amount,
                   rdv: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].rdv,
-                  description: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].description
+                  description: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].description,
+                  units: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].units,
+
                 })
                 }
                 return result
@@ -100,7 +102,7 @@ export default class WeeklyScreen extends Component {
             subText: {
               padding: 10,
               fontSize: 14,
-              height: 40,
+              // height: 40
             }
           })
 
@@ -119,8 +121,8 @@ export default class WeeklyScreen extends Component {
                 renderItem={({item}) =>
                     <View>
                         <Text style={styles.item}>{item.name} </Text>
-                        <Text style={styles.subText}>{item.amount}/{item.rdv}{item.units}</Text>
-                        <Text style={styles.subText}>{item.description}</Text>
+                        <Text style={styles.subText}>{`${item.amount}/${item.rdv}${item.units} RWV`}</Text>
+                        <Text numberOfLines={2} style={styles.subText}>{item.description}</Text>
                     </View>
             }
                 

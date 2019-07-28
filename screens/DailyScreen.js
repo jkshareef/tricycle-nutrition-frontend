@@ -2,10 +2,9 @@ import React, {Component} from 'react';
 import { StyleSheet, SectionList, Text, View, FlatList, Button, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { List, Checkbox } from 'react-native-paper';
+import * as Progress from 'react-native-progress';
 
 
-
-// import compounds from '../helpers/compounds'
 
 
 
@@ -63,45 +62,39 @@ export default class DailyScreen extends Component {
      
 
       compounds = () => {
-        // console.log(this.state.compoundData.total)
+       
           return Object.values(this.state.compoundData.total).map((compound, index) => {
-          // for (let i = 0; i < Object.keys(this.state.compoundData.total).length; i++) {
+     
             return (<List.Item
             key = {index}
             title={compound.name}
-            description={`${compound.amount} /${compound.rdv}${compound.units} \n${compound.description}`}
-            // left={props => <List.Icon {...props} icon="arrow_right" />}
+            
+            description={({
+              ellipsizeMode,
+              color: descriptionColor,
+              fontSize,
+            }) => (
+          <View>
+          
+              <Text
+              numberOfLines={1}
+              >
+              {`${compound.amount}/${compound.rdv}${compound.units} RDV`}
+              </Text>
+              <Progress.Bar progress={compound.amount/compound.rdv} width={200} />
+              <Text style={{marginTop: 10}}
+            
+              ellipsizeMode={ellipsizeMode}>
+                  {compound.description}
+              </Text>
+              
+          </View>
+            )}
+       
             />)
-          // result.push({
-          //   name: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].name, 
-          //   amount: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].amount,
-          //   rdv: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].rdv,
-          //   description: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].description
-          // })
+      
              })
           }
-          
-
-       
-
-      //  compoundAmounts = () => {
-      //   result = []
-      //   if (this.state.compoundData !== null) {
-      //     for (let i = 0; i < Object.keys(this.state.compoundData.total).length; i++) {
-      //       result.push(this.state.compoundData[Object.keys(this.state.compoundData)[i]].amount)
-      //     }
-      //     return result
-      //   } else {
-      //     return
-      //   }
-      //  }
-    
-      
-     
-
-      
-    
-
     
 
     render() {
@@ -131,36 +124,7 @@ export default class DailyScreen extends Component {
           height: 40,
         }
       })
-      
-          // const compounds = [
-          //   "protein", "fiber", "calcium","iron", "iron", "manganese",
-          //   "phosphorus", "potassium", "sodium", "zinc", "copper", 
-          //   "selenium", "vitamin_a", "vitamin_e", "vitamin_d", "vitamin_c", 
-          //   "thiamin", "riboflavin", "niacin", "vitamin_b5", "vitamin_b6",
-          //   "vitamin_b12", "choline", "vitamin_k", "folate"] 
-
-        
        
-              
-          
-
-          let compoundAmounts = () => {
-            
-          }
-
-          let compoundRdv = () => {
-
-          }
-
-          let compoundDescription = () => {
-
-          }
-
-
-
-          
-
-          
         return (
           
           <View style={styles.container}>

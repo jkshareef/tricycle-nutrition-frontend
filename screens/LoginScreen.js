@@ -153,7 +153,7 @@ export default class LoginScreen extends Component {
                     <Button 
                     onPress={this.onPressSignup}
                     title="Sign up"/>
-                    <Text>Don't have an account? Click here to sign-up</Text>
+                    <Text style={{textAlign: "center"}}>Don't have an account? Click here to sign-up</Text>
                 
             </View>
         )
