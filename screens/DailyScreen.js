@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import { StyleSheet, SectionList, Text, View, FlatList, Button, AsyncStorage} from 'react-native';
+import { StyleSheet, ScrollView, SectionList, Text, View, FlatList, Button, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { List, Checkbox } from 'react-native-paper';
 import * as Progress from 'react-native-progress';
+import VitaminDailyList from '../components/VitaminDailyList'
 
-
+const NGROK_URL = "https://ecb0c20d.ngrok.io"
 
 
 
@@ -50,7 +51,7 @@ export default class DailyScreen extends Component {
         }
         
       }
-      fetch(`http://localhost:3000/api/v1/food/day`, config)
+      fetch(NGROK_URL + '/api/v1/food/day', config)
       .then(resp => resp.json())
       .then(json => {
         this.setState({
@@ -59,42 +60,72 @@ export default class DailyScreen extends Component {
         })
       })
       }
+
+      percentProgress = (compound) => {
+        const percentage = compound.amount / compound.rdv
+        if (percentage > 1) {
+          return (
+            <Progress.Bar progress={1} width={null} color={"green"} />
+          )
+        } else if (percentage == NaN) {
+          return (
+            null
+          )
+        } else if (percentage == Infinity) {
+          return (
+            null
+          )
+        } else if (percentage < 0.9) {
+          return (
+            <Progress.Bar progress={percentage} width={null} color={"yellow"} />
+          )
+        } else if (percentage >= 9 && percentage <= 1) {
+          return (
+            <Progress.Bar progress={percentage} width={null} color={"green"} />
+          )
+        } else {
+          return (
+            null
+          )
+        }
+      }
      
 
-      compounds = () => {
+      // compounds = () => {
        
-          return Object.values(this.state.compoundData.total).map((compound, index) => {
-     
-            return (<List.Item
-            key = {index}
-            title={compound.name}
+      //     return Object.values(this.state.compoundData.total).map((compound, index) => {
+      //       const percentage = compound.amount / compound.rdv
+      //       return (
+      //       <List.Item
+      //       key = {index}
+      //       title={compound.name}
             
-            description={({
-              ellipsizeMode,
-              color: descriptionColor,
-              fontSize,
-            }) => (
-          <View>
+      //       description={({
+      //         ellipsizeMode,
+      //         color: descriptionColor,
+      //         fontSize,
+      //       }) => (
+      //     <View>
           
-              <Text
-              numberOfLines={1}
-              >
-              {`${compound.amount}/${compound.rdv}${compound.units} RDV`}
-              </Text>
-              <Progress.Bar progress={compound.amount/compound.rdv} width={200} />
-              <Text style={{marginTop: 10}}
+      //         <Text
+      //         numberOfLines={1}
+      //         >
+      //         {`${compound.amount}/${compound.rdv}${compound.units} RDV`}
+      //         </Text>
+      //         {this.percentProgress(percentage)}
+      //         <Text style={{marginTop: 10}}
             
-              ellipsizeMode={ellipsizeMode}>
-                  {compound.description}
-              </Text>
+      //         ellipsizeMode={ellipsizeMode}>
+      //             {compound.description}
+      //         </Text>
               
-          </View>
-            )}
+      //     </View>
+      //       )}
        
-            />)
+      //       />)
       
-             })
-          }
+      //        })
+      //     }
     
 
     render() {
@@ -124,6 +155,8 @@ export default class DailyScreen extends Component {
           height: 40,
         }
       })
+
+
        
         return (
           
@@ -132,8 +165,12 @@ export default class DailyScreen extends Component {
                 title="Go to Home"
                 onPress={() => this.props.navigation.navigate('Home')}
                 />
-          {this.state.compoundData === null?null:this.compounds()}
-            
+            <ScrollView>
+           {this.state.compoundData? 
+           <VitaminDailyList data = {this.state.compoundData.total} percentProgress = {this.percentProgress}/>
+          : null}
+          {/* {this.state.compoundData === null?null:this.compounds()} */}
+        
           {/* <SectionList
           sections={[
             {title: this.state.days, data: this.compounds()},]}
@@ -152,7 +189,7 @@ export default class DailyScreen extends Component {
           renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
           keyExtractor={(item, index) => index}
         /> */}
-        
+        </ScrollView>
       </View>
       );
     }

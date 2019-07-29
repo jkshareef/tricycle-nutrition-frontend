@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import { StyleSheet, SectionList, View, Text, FlatList, Button, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { ToggleButton} from 'react-native-paper';
+import * as Progress from 'react-native-progress';
 
+
+const NGROK_URL = "https://ecb0c20d.ngrok.io"
 export default class WeeklyScreen extends Component {
     constructor(props) {
         super(props)
@@ -46,7 +49,7 @@ export default class WeeklyScreen extends Component {
             }
             
           }
-          fetch(`http://localhost:3000/api/v1/food/week`, config)
+          fetch(NGROK_URL + '/api/v1/food/week', config)
           .then(resp => resp.json())
           .then(json => {
             this.setState({
@@ -75,6 +78,34 @@ export default class WeeklyScreen extends Component {
                 return ["Loading..."]
             }
            }
+
+           percentProgress = (percentage) => {
+            if (percentage > 1) {
+              return (
+                <Progress.Bar progress={1} width={null} color={"green"} />
+              )
+            } else if (percentage == NaN) {
+              return (
+                null
+              )
+            } else if (percentage == Infinity) {
+              return (
+                null
+              )
+            } else if (percentage < 0.9) {
+              return (
+                <Progress.Bar progress={percentage} width={null} color={"yellow"} />
+              )
+            } else if (percentage >= 9 && percentage <= 1) {
+              return (
+                <Progress.Bar progress={percentage} width={null} color={"green"} />
+              )
+            } else {
+              return (
+                null
+              )
+            }
+          }
     
 
     render() {
@@ -121,8 +152,9 @@ export default class WeeklyScreen extends Component {
                 renderItem={({item}) =>
                     <View>
                         <Text style={styles.item}>{item.name} </Text>
-                        <Text style={styles.subText}>{`${item.amount}/${item.rdv}${item.units} RWV`}</Text>
-                        <Text numberOfLines={2} style={styles.subText}>{item.description}</Text>
+                        <Text style={styles.subText}>{`${item.amount}/${item.rdv * 7}${item.units} RWV`}</Text>
+                        {this.percentProgress(item.amount/(item.rdv *7))}
+                        <Text numberOfLines={12} style={styles.subText}>{item.description}</Text>
                     </View>
             }
                 

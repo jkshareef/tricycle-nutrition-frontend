@@ -5,6 +5,8 @@ import { TextInput } from 'react-native-gesture-handler';
 import { List, Checkbox } from 'react-native-paper';
 import RecentMeal from '../components/RecentMeal'
 
+const NGROK_URL = "https://ecb0c20d.ngrok.io"
+
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -35,7 +37,6 @@ export default class HomeScreen extends Component {
     }
 
   async getRecent() {
-    debugger
     const token = await this.getToken()
     const config = {
         headers: {
@@ -43,7 +44,7 @@ export default class HomeScreen extends Component {
           'Authorization' : 'Bearer ' + token
         }
       }
-      fetch("http://localhost:3000/api/v1/food/recent", config)
+      fetch(NGROK_URL + '/api/v1/food/recent', config)
       .then(resp => resp.json())
       .then(json => {
         this.setState({
@@ -62,7 +63,7 @@ export default class HomeScreen extends Component {
   //       'Content-Type': 'application/json'
   //     }
   //   }
-  //   fetch("http://localhost:3000/foodnames", config)
+  //   fetch("http://127.0.0.1:4041/foodnames", config)
   //   .then(resp => resp.json())
   //   .then(json => {
   //     return json
@@ -121,7 +122,7 @@ export default class HomeScreen extends Component {
         'Content-Type' : 'application/json'
       }
     }
-    fetch(`http://localhost:3000/api/v1/add/${query}`, config)
+    fetch(NGROK_URL + '/api/v1/add/${query}', config)
     .then(resp=>resp.json())
     .then(this.setState({
       query: '',
