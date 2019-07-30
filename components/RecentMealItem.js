@@ -21,7 +21,7 @@ export default class RecentMealItem extends Component {
         const compound = this.props.compound
         return (
             <View>
-                    <Text style={{marginTop: 5}}
+                    <Text style={{marginTop: 5, paddingRight: 10}}
                         numberOfLines = {2}>
                         {compound.description}
                     </Text>
@@ -39,7 +39,7 @@ export default class RecentMealItem extends Component {
         const compound = this.props.compound
         return (
             <View> 
-                <Text style={{marginTop: 5}}
+                <Text style={{marginTop: 5, paddingRight: 10}}
                 numberOfLines = {10}>
                 {compound.description}
                 </Text>
