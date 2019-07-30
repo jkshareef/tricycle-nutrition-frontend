@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput, View, Button, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 
-
+NGROK_URL = "https://ecb0c20d.ngrok.io"
 
 
 
@@ -33,14 +33,15 @@ export default class LoginScreen extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(payload)
         }
-        fetch('http://localhost:3000/api/v1/login', config)
+        this.clearToken()
+        fetch(NGROK_URL + '/api/v1/login', config)
         .then(resp => resp.json())
         .then(json => {
             if(json && json.jwt) {
                 this.saveToken(json.jwt)
             }
         })
-        .then(this.props.navigation.navigate('Home'))
+        .then(this.goHome())
        .catch(error => console.log('Error: ', error))
     }
 
@@ -53,24 +54,18 @@ export default class LoginScreen extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(payload)
         }
-        fetch('http://localhost:3000/api/v1/users', config)
+        fetch(NGROK_URL + '/api/v1/users', config)
         .then(resp => resp.json())
         .then(json => {
             if(json && json.jwt) {
                 this.saveToken(json.jwt)
             }
-        }, () => this.props.navigation.navigate("Home"))
+        })
+        .then(this.goHome())
         .catch(error => console.log('Error: ', error))
     }
 
-    // goHome = () => {
-    //     this.props.navigation.navigate('Home')
-    // }
 
-    
-    // saveToken() {
-    //     localStorage.setItem('jwt', jwt)
-    //   }
 
     saveToken = async (jwt) => {
     try {
@@ -80,9 +75,9 @@ export default class LoginScreen extends Component {
     }
     }
       
-    // clearToken() {
-    //     localStorage.setItem('jwt', '')
-    //   }
+    clearToken = () => {
+        AsyncStorage.setItem('jwt', '')
+      }
 
     getToken = async () => {
         try {
@@ -99,6 +94,21 @@ export default class LoginScreen extends Component {
             // Error retrieving data
         }
         }
+
+    goHome = async () => {
+        try {
+            const token = await AsyncStorage.getItem('jwt')
+            if (token !== null) {
+                this.props.navigation.navigate('Home')
+            } else {
+                return null
+            }
+        } catch (error) {
+
+        }
+        
+    }
+    
       
 
   
@@ -152,8 +162,9 @@ export default class LoginScreen extends Component {
                     title="Login"/>
                     <Button 
                     onPress={this.onPressSignup}
-                    title="Sign up"/>
-                    <Text>Don't have an account? Click here to sign-up</Text>
+                    title="Sign up"
+                    onPress={() => this.onPressSignup}/>
+                    <Text style={{textAlign: "center"}}>Don't have an account? Click here to sign-up</Text>
                 
             </View>
         )

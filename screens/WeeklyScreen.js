@@ -1,8 +1,12 @@
 import React, {Component} from 'react';
-import { StyleSheet, SectionList, Text, View, FlatList, Button, AsyncStorage} from 'react-native';
+import { StyleSheet, SectionList, View, Text, FlatList, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { ToggleButton } from 'react-native-paper';
+import { ToggleButton, Button} from 'react-native-paper';
+import * as Progress from 'react-native-progress';
+import VitaminList from '../components/VitaminList'
 
+
+const NGROK_URL = "https://ecb0c20d.ngrok.io"
 export default class WeeklyScreen extends Component {
     constructor(props) {
         super(props)
@@ -46,7 +50,7 @@ export default class WeeklyScreen extends Component {
             }
             
           }
-          fetch(`http://localhost:3000/api/v1/food/week`, config)
+          fetch(NGROK_URL + '/api/v1/food/week', config)
           .then(resp => resp.json())
           .then(json => {
             this.setState({
@@ -65,7 +69,9 @@ export default class WeeklyScreen extends Component {
                   name: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].name, 
                   amount: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].amount,
                   rdv: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].rdv,
-                  description: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].description
+                  description: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].description,
+                  units: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].units,
+
                 })
                 }
                 return result
@@ -73,6 +79,49 @@ export default class WeeklyScreen extends Component {
                 return ["Loading..."]
             }
            }
+
+           percentProgress = (compound) => {
+            const percentage = compound.amount / (compound.rdv * 7)
+            if (percentage > 1) {
+              return (
+                <View style={{flex: 1, flexDirection: "row"}}>
+                  <Progress.Bar borderColor={"black"} borderRadius={10} progress={1} height={15} width={300} color={"green"}/>
+                  <Button icon="done-all" compact="true" contentStyle={{alignSelf: "flex-end", height: 15, width: 50}}></Button>
+                </View>
+              )
+            } else if (percentage == NaN) {
+              return (
+                null
+              )
+            } else if (percentage == Infinity) {
+              return (
+                null
+              )
+            } else if (percentage < 0.1) {
+              return (
+                <View style={{flex: 1, flexDirection: "row"}}>
+                <Progress.Bar borderColor={"black"} borderRadius={10} progress={percentage} height={15} width={300} color={"red"}/>
+                </View>
+              )
+            } else if (percentage < 0.9) {
+              return (
+                <View style={{flex: 1, flexDirection: "row"}}>
+                <Progress.Bar borderColor={"black"} borderRadius={10} progress={percentage} height={15} width={300} color={"blue"}/>
+                </View>
+              )
+            } else if (percentage >= 9 && percentage <= 1) {
+              return (
+                <View style={{flex: 1, flexDirection: "row"}}>
+                <Progress.Bar borderColor={"black"} borderRadius={10} progress={percentage} height={15} width={300} color={"green"}/>
+                <Button icon="done-all" compact="true" contentStyle={{alignSelf: "flex-end", height: 15, width: 50}}></Button>
+              </View>
+              )
+            } else {
+              return (
+                null
+              )
+            }
+          }
     
 
     render() {
@@ -100,27 +149,27 @@ export default class WeeklyScreen extends Component {
             subText: {
               padding: 10,
               fontSize: 14,
-              height: 40,
+              // height: 40
             }
           })
 
         return (
             
             <View style={styles.container}>
-                <Button
-                title="Go to Home"
-                onPress={() => this.props.navigation.navigate('Home')}
-                />
-            <SectionList
+              {this.state.compoundData? 
+           <VitaminList time="week" data = {this.state.compoundData.total} percentProgress = {this.percentProgress}/>
+          : null}
+
+            {/* <SectionList
                 sections={[
                     {title: this.state.days, data: this.compounds()},]}
-                    // {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
             
                 renderItem={({item}) =>
                     <View>
                         <Text style={styles.item}>{item.name} </Text>
-                        <Text style={styles.subText}>{item.amount}/{item.rdv}{item.units}</Text>
-                        <Text style={styles.subText}>{item.description}</Text>
+                        <Text style={styles.subText}>{`${item.amount}/${item.rdv * 7}${item.units} RWV`}</Text>
+                        {this.percentProgress(item.amount/(item.rdv *7))}
+                        <Text numberOfLines={12} style={styles.subText}>{item.description}</Text>
                     </View>
             }
                 
@@ -128,7 +177,7 @@ export default class WeeklyScreen extends Component {
             
                     renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                     keyExtractor={(item, index) => index}
-                    />
+                    /> */}
             
             </View>
         )

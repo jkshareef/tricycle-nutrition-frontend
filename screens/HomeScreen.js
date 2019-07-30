@@ -5,6 +5,8 @@ import { TextInput } from 'react-native-gesture-handler';
 import { List, Checkbox } from 'react-native-paper';
 import RecentMeal from '../components/RecentMeal'
 
+const NGROK_URL = "https://ecb0c20d.ngrok.io"
+
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -35,7 +37,6 @@ export default class HomeScreen extends Component {
     }
 
   async getRecent() {
-    debugger
     const token = await this.getToken()
     const config = {
         headers: {
@@ -43,7 +44,7 @@ export default class HomeScreen extends Component {
           'Authorization' : 'Bearer ' + token
         }
       }
-      fetch("http://localhost:3000/api/v1/food/recent", config)
+      fetch(NGROK_URL + '/api/v1/food/recent', config)
       .then(resp => resp.json())
       .then(json => {
         this.setState({
@@ -62,7 +63,7 @@ export default class HomeScreen extends Component {
   //       'Content-Type': 'application/json'
   //     }
   //   }
-  //   fetch("http://localhost:3000/foodnames", config)
+  //   fetch("http://127.0.0.1:4041/foodnames", config)
   //   .then(resp => resp.json())
   //   .then(json => {
   //     return json
@@ -121,7 +122,7 @@ export default class HomeScreen extends Component {
         'Content-Type' : 'application/json'
       }
     }
-    fetch(`http://localhost:3000/api/v1/add/${query}`, config)
+    fetch(NGROK_URL + '/api/v1/add/${query}', config)
     .then(resp=>resp.json())
     .then(this.setState({
       query: '',
@@ -132,64 +133,6 @@ export default class HomeScreen extends Component {
     .then(()=> this.getRecent())
     .catch(error => console.log("Error: ", error))
   }
-
-  // recentMeal = () => {
-  //       result = []
-  //       // console.log(Object.keys(this.state.compoundData).length)
-  //         for (let i = 0; i < Object.keys(this.state.compoundData[data]).length; i++) {
-  //           result.push({
-  //             name: this.state.compoundData[Object.keys(this.state.compoundData)[i]].name, 
-  //             amount: this.state.compoundData[Object.keys(this.state.compoundData)[i]].amount,
-  //             rdv: this.state.compoundData[Object.keys(this.state.compoundData)[i]].rdv,
-  //             description: this.state.compoundData[Object.keys(this.state.compoundData)[i]].description
-  //           })
-  //           }
-           
-       
-  //      }
-
-  mealNames = () => {
-        
-    for (let food in this.state.compoundData.data) {
-      // console.log(typeof this.state.compoundData.data[food])
-      // console.log(this.state.compoundData.data[Object.keys.this.state.compoundData.data.indexOf(food)])
-      return(
-      <List.Accordion
-        title={food}
-        style={{width: 400, alignItems: "center"}}
-        left={props => <List.Icon {...props} icon="restaurant" />}
-        expanded={this.state.expanded}
-        onPress={this.handlePress}
-      >
-        {this.mealCompounds(this.state.compoundData.data[food])}
-    </List.Accordion>
-      )}
-    
-  }
-
-  mealCompounds = (food) => {
-      
-      return food.map((compound, index) => {
-         return (
-        <List.Item
-          key= {index} 
-          title={compound.name}
-          description={`${compound.amount}/${compound.rdv} \n${compound.description}`}
-          
-      />    
-        )
-      }
-      )
-    }
-       
-    
-    renderFoodNames = (food) => {
-      return (
-        <View>
-          <Text>{food.name}</Text>
-        </View>
-      )
-    }
 
     // searchedFoodNames = (text) => {
     //   this.setState({
@@ -246,7 +189,7 @@ export default class HomeScreen extends Component {
           });
 
         
-        let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+        // let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
           // console.log("In render")
           // console.log(this.state.compoundData)
 

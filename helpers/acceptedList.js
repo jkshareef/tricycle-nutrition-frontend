@@ -1,0 +1,36 @@
+export const acceptedList = [
+    "fiber, total dietary",
+    "protein",
+    "calcium, ca",
+    "iron, fe",
+    "magnesium, mg",
+    "phosphorus, p",
+    "potassium, k",
+    "sodium, na",
+    "sulfur, S",
+    "zinc, zn",
+    "chromium, cr",
+    "cobalt, co",
+    "copper, cu",
+    "iodine, i",
+    "manganese, mn",
+    "selenium, se",
+    "vitamin a, iu",
+    "vitamin a, rae",
+    "vitamin e (alpha-tocopherol)",
+    "vitamin d (d2 + d3)",
+    "vitamin C, total ascorbic acid",
+    "thiamin",
+    "riboflavin",
+    "niacin",
+    "pantothenic acid",
+    "vitamin b-6",
+    "biotin",
+    "folate, total",
+    "vitamin b-12",
+    "choline, total",
+    "vitamin K (phylloquinone)"
+    ];
+
+ 
+
