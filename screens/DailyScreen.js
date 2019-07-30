@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import { StyleSheet, ScrollView, SectionList, Text, View, FlatList, Button, AsyncStorage} from 'react-native';
+import { StyleSheet, ScrollView, SectionList, Text, View, FlatList, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { List, Checkbox } from 'react-native-paper';
+import {Button} from 'react-native-paper';
 import * as Progress from 'react-native-progress';
 import VitaminDailyList from '../components/VitaminDailyList'
 
@@ -65,7 +65,10 @@ export default class DailyScreen extends Component {
         const percentage = compound.amount / compound.rdv
         if (percentage > 1) {
           return (
-            <Progress.Bar progress={1} width={null} color={"green"} />
+            <View style={{flex: 1, flexDirection: "row"}}>
+              <Progress.Bar borderRadius={10} progress={1} height={15} width={300} color={"green"}/>
+              <Button icon="done-all" compact="true" contentStyle={{alignSelf: "flex-end", height: 15, width: 50}}></Button>
+            </View>
           )
         } else if (percentage == NaN) {
           return (
@@ -75,13 +78,24 @@ export default class DailyScreen extends Component {
           return (
             null
           )
+        } else if (percentage < 0.1) {
+          return (
+            <View style={{flex: 1, flexDirection: "row"}}>
+            <Progress.Bar borderRadius={10} progress={percentage} height={15} width={300} color={"red"}/>
+            </View>
+          )
         } else if (percentage < 0.9) {
           return (
-            <Progress.Bar progress={percentage} width={null} color={"yellow"} />
+            <View style={{flex: 1, flexDirection: "row"}}>
+            <Progress.Bar borderRadius={10} progress={percentage} height={15} width={300} color={"blue"}/>
+            </View>
           )
         } else if (percentage >= 9 && percentage <= 1) {
           return (
-            <Progress.Bar progress={percentage} width={null} color={"green"} />
+            <View style={{flex: 1, flexDirection: "row"}}>
+            <Progress.Bar borderRadius={10} progress={percentage} height={15} width={300} color={"green"}/>
+            <Button icon="done-all" compact="true" contentStyle={{alignSelf: "flex-end", height: 15, width: 50}}></Button>
+          </View>
           )
         } else {
           return (
@@ -89,60 +103,14 @@ export default class DailyScreen extends Component {
           )
         }
       }
-     
-
-      // compounds = () => {
-       
-      //     return Object.values(this.state.compoundData.total).map((compound, index) => {
-      //       const percentage = compound.amount / compound.rdv
-      //       return (
-      //       <List.Item
-      //       key = {index}
-      //       title={compound.name}
-            
-      //       description={({
-      //         ellipsizeMode,
-      //         color: descriptionColor,
-      //         fontSize,
-      //       }) => (
-      //     <View>
-          
-      //         <Text
-      //         numberOfLines={1}
-      //         >
-      //         {`${compound.amount}/${compound.rdv}${compound.units} RDV`}
-      //         </Text>
-      //         {this.percentProgress(percentage)}
-      //         <Text style={{marginTop: 10}}
-            
-      //         ellipsizeMode={ellipsizeMode}>
-      //             {compound.description}
-      //         </Text>
-              
-      //     </View>
-      //       )}
-       
-      //       />)
-      
-      //        })
-      //     }
-    
 
     render() {
 
       const styles = StyleSheet.create({
         container: {
          flex: 1,
-         paddingTop: 22
-        },
-        sectionHeader: {
-          paddingTop: 2,
-          paddingLeft: 10,
-          paddingRight: 10,
-          paddingBottom: 2,
-          fontSize: 24,
-          fontWeight: 'bold',
-          backgroundColor: 'rgba(247,247,247,1.0)',
+         paddingLeft: 20,
+         paddingRight: 20
         },
         item: {
           padding: 10,
@@ -161,34 +129,10 @@ export default class DailyScreen extends Component {
         return (
           
           <View style={styles.container}>
-            <Button
-                title="Go to Home"
-                onPress={() => this.props.navigation.navigate('Home')}
-                />
             <ScrollView>
            {this.state.compoundData? 
            <VitaminDailyList data = {this.state.compoundData.total} percentProgress = {this.percentProgress}/>
           : null}
-          {/* {this.state.compoundData === null?null:this.compounds()} */}
-        
-          {/* <SectionList
-          sections={[
-            {title: this.state.days, data: this.compounds()},]}
-            // {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
-          
-          renderItem={({item}) =>
-            <View>
-            <Text style={styles.item}>{item.name} </Text>
-            <Text style={styles.subText}>{item.amount}/{item.rdv}</Text>
-            <Text style={styles.subText}>{item.description}</Text>
-            </View>
-          }
-            
-        
-          
-          renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-          keyExtractor={(item, index) => index}
-        /> */}
         </ScrollView>
       </View>
       );

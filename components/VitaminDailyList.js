@@ -18,7 +18,6 @@ export default class VitaminDailyList extends Component {
     
     
     render() { 
-      debugger
       const styles = StyleSheet.create({
         container: {
          flex: 1,
@@ -50,7 +49,7 @@ export default class VitaminDailyList extends Component {
           sections={[
             {title: '', data: this.sectionListData()},
           ]}
-          renderItem={({item}) => <VitaminDailyItem compound = {item}/>}
+          renderItem={({item}) => <VitaminDailyItem compound = {item} percentProgress={this.props.percentProgress}/>}
           renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
           keyExtractor={(item, index) => index}
         />

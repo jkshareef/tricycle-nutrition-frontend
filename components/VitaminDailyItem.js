@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {List} from 'react-native-paper';
-import { StyleSheet, Text, View, Button} from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight} from 'react-native';
 
 
 export default class VitaminDailyItem extends Component {
@@ -9,7 +9,7 @@ export default class VitaminDailyItem extends Component {
         this.state = {
             expanded: false
         }
-        debugger
+       
     }
 
     handlePress = () => {
@@ -26,9 +26,12 @@ export default class VitaminDailyItem extends Component {
                                 numberOfLines = {2}>
                                 {compound.description}
                             </Text>
-                            <Button
-                            onPress={this.handlePress} 
-                            title="Show More"/>
+                            <TouchableHighlight
+                                style={styles.button}
+                                onPress={this.handlePress}
+                                >
+                                <Text> Show More </Text>
+                            </TouchableHighlight>
                     </View>
                 )
             }
@@ -41,11 +44,20 @@ export default class VitaminDailyItem extends Component {
                         numberOfLines = {10}>
                         {compound.description}
                         </Text>
-                        <Button 
-                        onPress={this.handlePress}
-                        title="Show Less"/>       
+                        <TouchableHighlight
+                            style={styles.button}
+                            onPress={this.handlePress}
+                            >
+                            <Text> Show Less</Text>
+                        </TouchableHighlight>     
                 </View>
             )
+        }
+    
+        capitalize = (string) => {
+            arr = string.split(/\s*(\s|,|=>)\s*/)
+            arr[0] = arr[0].charAt(0).toUpperCase() + arr[0].slice(1)
+            return arr.join(' ')
         }
 
 
@@ -56,9 +68,9 @@ export default class VitaminDailyItem extends Component {
 
         return (
             <View>
-                <Text>{compound.name}</Text>
-                <Text>{compound.name}/{compound.rdv} RDV</Text>
-                {this.props.percentProgress}
+                <Text style={styles.textHeader}>{this.capitalize(compound.name)}</Text>
+                <Text>{compound.amount}/{compound.rdv}{compound.units} RDV</Text>
+                {this.props.percentProgress(compound)}
                 {this.state.expanded? this.readLess() : this.readMore()}
             </View>
             
@@ -68,6 +80,17 @@ export default class VitaminDailyItem extends Component {
         
     }
 }
+
+
+const styles = StyleSheet.create({
+    textHeader : {
+        fontSize: 20,
+    },
+    button: {
+        alignItems: 'flex-end',
+        padding: 10
+      }
+})
 
 // return (
 //     <List.Item
