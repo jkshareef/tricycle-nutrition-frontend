@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, SectionList, StyleSheet} from 'react-native'
 import VitaminItem from './VitaminItem';
-import {acceptedList} from '../helpers/acceptedList';
+import {acceptedList} from '../helpers/acceptedList'
 
 export default class VitaminList extends Component {
     constructor(props) {
@@ -15,17 +15,7 @@ export default class VitaminList extends Component {
     sectionListData = () => {
 
         array = this.props.data.filter(compound => acceptedList.includes(compound.name))
-        // array.forEach((item, index) => {
-        //   array[index] = [item]
-        // })
         return array
-
-        // return this.props.data.map((compound) => {
-        //   if (acceptedList.includes(compound.name)) {
-        //     return ([compound])
-        //   }
-        //   // return([compound])
-        // })
     }
     
     

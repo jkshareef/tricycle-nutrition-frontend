@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {View, Text, ScrollView, StyleSheet} from 'react-native'
+import {View, Text, ScrollView, StyleSheet, SectionList} from 'react-native';
 import { List } from 'react-native-paper';
-import {acceptedList} from '../helpers/acceptedList';
-import RecentMealItem from '../components/RecentMealItem'
+import RecentMealItem from './RecentMealItem';
+// import {acceptedList} from '../helpers/acceptedList';
 
 
 
@@ -24,21 +24,25 @@ export default class RecentMeal extends Component {
 
     
 
+    sectionListData = (foodHash) => {
+        debugger
+      return (
+        [].concat.apply([], Object.values(foodHash)).filter(compound => acceptedList.includes(compound.name))
+      )
+    } 
 
 
   
 
     render() {
-      debugger
-      const compounds = [].concat.apply([], Object.values(this.props.meals.data))
-      .filter(compound => acceptedList.includes(compound.name)).map((compound))
 
-        
-        return (
+    
+        debugger
+        return(
         this.props.meals.data.map((foodHash, index) => 
           <List.Accordion
           key = {index}
-          title={Object.keys(foodHash)[0]}
+          title={foodHash.food}
           style={{width: 400, alignItems: "center"}}
           left={props => <List.Icon {...props} icon="restaurant" />}
           expanded={this.state.expanded}
@@ -51,7 +55,7 @@ export default class RecentMeal extends Component {
     
             <SectionList
               sections={[
-                {title: '', data: {compounds}},
+                {title: '', data: this.sectionListData(foodHash)},
               ]}
               renderItem={({item}) => <RecentMealItem compound = {item}/>}
               renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
@@ -91,4 +95,39 @@ const styles = StyleSheet.create({
     // height: 40
   }
 })
+
+
+const acceptedList = [
+  "fiber, total dietary",
+  "protein",
+  "calcium, ca",
+  "iron, fe",
+  "magnesium, mg",
+  "phosphorus, p",
+  "potassium, k",
+  "sodium, na",
+  "sulfur, S",
+  "zinc, zn",
+  "chromium, cr",
+  "cobalt, co",
+  "copper, cu",
+  "iodine, i",
+  "manganese, mn",
+  "selenium, se",
+  "vitamin a, iu",
+  "vitamin a, rae",
+  "vitamin e (alpha-tocopherol)",
+  "vitamin d (d2 + d3)",
+  "vitamin C, total ascorbic acid",
+  "thiamin",
+  "riboflavin",
+  "niacin",
+  "pantothenic acid",
+  "vitamin b-6",
+  "biotin",
+  "folate, total",
+  "vitamin b-12",
+  "choline, total",
+  "vitamin K (phylloquinone)"
+  ];
 

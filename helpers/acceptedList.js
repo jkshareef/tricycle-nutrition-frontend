@@ -30,5 +30,7 @@ export const acceptedList = [
     "vitamin b-12",
     "choline, total",
     "vitamin K (phylloquinone)"
-    ]
+    ];
+
+ 
 
