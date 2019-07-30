@@ -19,7 +19,7 @@ export default class VitaminDailyItem extends Component {
     }
 
     readMore = () => {
-        const compound = this.props.compound[0]
+        const compound = this.props.compound
                 return (
                     <View>
                             <Text style={{marginTop: 10}}
@@ -37,7 +37,7 @@ export default class VitaminDailyItem extends Component {
             }
                  
         readLess = () => {
-            const compound = this.props.compound[0]
+            const compound = this.props.compound
             return (
                 <View> 
                         <Text style={{marginTop: 10}}
@@ -63,8 +63,8 @@ export default class VitaminDailyItem extends Component {
 
 
     render() {
-        
-        const compound = this.props.compound[0]
+        debugger
+        const compound = this.props.compound
 
         return (
             <View>

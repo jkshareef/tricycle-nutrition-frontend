@@ -66,7 +66,7 @@ export default class DailyScreen extends Component {
         if (percentage > 1) {
           return (
             <View style={{flex: 1, flexDirection: "row"}}>
-              <Progress.Bar borderRadius={10} progress={1} height={15} width={300} color={"green"}/>
+              <Progress.Bar borderColor={"black"} borderRadius={10} progress={1} height={15} width={300} color={"green"}/>
               <Button icon="done-all" compact="true" contentStyle={{alignSelf: "flex-end", height: 15, width: 50}}></Button>
             </View>
           )
@@ -81,19 +81,19 @@ export default class DailyScreen extends Component {
         } else if (percentage < 0.1) {
           return (
             <View style={{flex: 1, flexDirection: "row"}}>
-            <Progress.Bar borderRadius={10} progress={percentage} height={15} width={300} color={"red"}/>
+            <Progress.Bar borderColor={"black"} borderRadius={10} progress={percentage} height={15} width={300} color={"red"}/>
             </View>
           )
         } else if (percentage < 0.9) {
           return (
             <View style={{flex: 1, flexDirection: "row"}}>
-            <Progress.Bar borderRadius={10} progress={percentage} height={15} width={300} color={"blue"}/>
+            <Progress.Bar borderColor={"black"} borderRadius={10} progress={percentage} height={15} width={300} color={"blue"}/>
             </View>
           )
         } else if (percentage >= 9 && percentage <= 1) {
           return (
             <View style={{flex: 1, flexDirection: "row"}}>
-            <Progress.Bar borderRadius={10} progress={percentage} height={15} width={300} color={"green"}/>
+            <Progress.Bar borderColor={"black"} borderRadius={10} progress={percentage} height={15} width={300} color={"green"}/>
             <Button icon="done-all" compact="true" contentStyle={{alignSelf: "flex-end", height: 15, width: 50}}></Button>
           </View>
           )

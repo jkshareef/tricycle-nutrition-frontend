@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, SectionList, StyleSheet} from 'react-native'
 import VitaminDailyItem from './VitaminDailyItem';
+import {acceptedList} from '../helpers/acceptedList';
 
 export default class VitaminDailyList extends Component {
     constructor(props) {
@@ -9,11 +10,22 @@ export default class VitaminDailyList extends Component {
           expanded: false
         }
     }
+
     
     sectionListData = () => {
-        return this.props.data.map((compound) => {
-          return ([compound])
-        })
+
+        array = this.props.data.filter(compound => acceptedList.includes(compound.name))
+        // array.forEach((item, index) => {
+        //   array[index] = [item]
+        // })
+        return array
+
+        // return this.props.data.map((compound) => {
+        //   if (acceptedList.includes(compound.name)) {
+        //     return ([compound])
+        //   }
+        //   // return([compound])
+        // })
     }
     
     
@@ -58,10 +70,3 @@ export default class VitaminDailyList extends Component {
     }
 }
 
-
-// return (
-//   this.props.data.map((compound, index) => 
-//   <VitaminDailyItem index = {index} compound = {compound} 
-//   percentProgress = {this.props.percentProgress}/> ) 
-  
-// )
