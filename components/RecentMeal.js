@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
-import {StyleSheet, View} from 'react-native'
-import { List, Checkbox, Text, Modal, Portal, Button, Provider } from 'react-native-paper';
+import {View, Text, ScrollView, StyleSheet} from 'react-native'
+import { List } from 'react-native-paper';
+import {acceptedList} from '../helpers/acceptedList';
+import RecentMealItem from '../components/RecentMealItem'
+
 
 
 
@@ -9,38 +12,30 @@ export default class RecentMeal extends Component {
         super(props)
         this.state = {
             expanded: false,
-            visible: false
+            visible: false,
         }
     }
 
-    
-    
-    //   _showModal = () => this.setState({ visible: true });
-    //   _hideModal = () => this.setState({ visible: false });
-
-
-
-
-    // componentWillMount() {
-    //     console.log(this.props.meals.data)
-    // }
 
     handlePress = () =>
     this.setState({
       expanded: !this.state.expanded
     });
 
-    handleExpanded = () => {
-        this.props.expanded
-    }
+    
+
+
+
+  
 
     render() {
-        // const { visible } = this.state;
+      debugger
+      const compounds = [].concat.apply([], Object.values(this.props.meals.data))
+      .filter(compound => acceptedList.includes(compound.name)).map((compound))
+
         
-        
-        return(
+        return (
         this.props.meals.data.map((foodHash, index) => 
-        
           <List.Accordion
           key = {index}
           title={Object.keys(foodHash)[0]}
@@ -48,39 +43,52 @@ export default class RecentMeal extends Component {
           left={props => <List.Icon {...props} icon="restaurant" />}
           expanded={this.state.expanded}
           onPress={this.handlePress}
-          
-        >
-        
-          {[].concat.apply([], Object.values(foodHash)).map((compound, idx) => 
-            <List.Item
-                key= {idx} 
-                titleStyle={{fontSize: 20}}
-                title={compound.name}
-                description={({
-                    ellipsizeMode,
-                    
-                  }) => (
-                <View>
-                    
-                    <Text
-                    numberOfLines={1}
-                    >
-                    {`${compound.amount}/${compound.rdv}${compound.units} RDV`}
-                    </Text>
-                    <Text style={{marginTop: 10}}
-                  
-                    ellipsizeMode={ellipsizeMode}>
-                        {compound.description}
-                    </Text>
-                    
-                    
-                    
-                    
-                </View>
-                  )}
-                />)}
+          >
+            <ScrollView>
+            {/* {[].concat.apply([], Object.values(foodHash))
+            .filter(compound => acceptedList.includes(compound.name))
+            .map((compound, idx) => */}
+    
+            <SectionList
+              sections={[
+                {title: '', data: {compounds}},
+              ]}
+              renderItem={({item}) => <RecentMealItem compound = {item}/>}
+              renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+              keyExtractor={(item, index) => index}
+        />
+            <RecentMealItem compound={compound} index={idx}/>)}
+            </ScrollView>
           </List.Accordion>
+          
         )
         )
     }
 }
+
+const styles = StyleSheet.create({
+  container: {
+   flex: 1,
+   paddingTop: 22
+  },
+  sectionHeader: {
+    paddingTop: 2,
+    paddingLeft: 10,
+    paddingRight: 10,
+    paddingBottom: 2,
+    fontSize: 24,
+    fontWeight: 'bold',
+    backgroundColor: 'rgba(247,247,247,1.0)',
+  },
+  item: {
+    padding: 10,
+    fontSize: 18,
+    height: 44,
+  },
+  subText: {
+    padding: 10,
+    fontSize: 14,
+    // height: 40
+  }
+})
+

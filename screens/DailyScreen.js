@@ -3,7 +3,7 @@ import { StyleSheet, ScrollView, SectionList, Text, View, FlatList, AsyncStorage
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import {Button} from 'react-native-paper';
 import * as Progress from 'react-native-progress';
-import VitaminDailyList from '../components/VitaminDailyList'
+import VitaminList from '../components/VitaminList'
 
 const NGROK_URL = "https://ecb0c20d.ngrok.io"
 
@@ -131,7 +131,7 @@ export default class DailyScreen extends Component {
           <View style={styles.container}>
             <ScrollView>
            {this.state.compoundData? 
-           <VitaminDailyList data = {this.state.compoundData.total} percentProgress = {this.percentProgress}/>
+           <VitaminList time = "day" data = {this.state.compoundData.total} percentProgress = {this.percentProgress}/>
           : null}
         </ScrollView>
       </View>

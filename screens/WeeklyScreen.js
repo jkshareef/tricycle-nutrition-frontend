@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import { StyleSheet, SectionList, View, Text, FlatList, Button, AsyncStorage} from 'react-native';
+import { StyleSheet, SectionList, View, Text, FlatList, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { ToggleButton} from 'react-native-paper';
+import { ToggleButton, Button} from 'react-native-paper';
 import * as Progress from 'react-native-progress';
+import VitaminList from '../components/VitaminList'
 
 
 const NGROK_URL = "https://ecb0c20d.ngrok.io"
@@ -79,10 +80,14 @@ export default class WeeklyScreen extends Component {
             }
            }
 
-           percentProgress = (percentage) => {
+           percentProgress = (compound) => {
+            const percentage = compound.amount / (compound.rdv * 7)
             if (percentage > 1) {
               return (
-                <Progress.Bar progress={1} width={null} color={"green"} />
+                <View style={{flex: 1, flexDirection: "row"}}>
+                  <Progress.Bar borderColor={"black"} borderRadius={10} progress={1} height={15} width={300} color={"green"}/>
+                  <Button icon="done-all" compact="true" contentStyle={{alignSelf: "flex-end", height: 15, width: 50}}></Button>
+                </View>
               )
             } else if (percentage == NaN) {
               return (
@@ -92,13 +97,24 @@ export default class WeeklyScreen extends Component {
               return (
                 null
               )
+            } else if (percentage < 0.1) {
+              return (
+                <View style={{flex: 1, flexDirection: "row"}}>
+                <Progress.Bar borderColor={"black"} borderRadius={10} progress={percentage} height={15} width={300} color={"red"}/>
+                </View>
+              )
             } else if (percentage < 0.9) {
               return (
-                <Progress.Bar progress={percentage} width={null} color={"yellow"} />
+                <View style={{flex: 1, flexDirection: "row"}}>
+                <Progress.Bar borderColor={"black"} borderRadius={10} progress={percentage} height={15} width={300} color={"blue"}/>
+                </View>
               )
             } else if (percentage >= 9 && percentage <= 1) {
               return (
-                <Progress.Bar progress={percentage} width={null} color={"green"} />
+                <View style={{flex: 1, flexDirection: "row"}}>
+                <Progress.Bar borderColor={"black"} borderRadius={10} progress={percentage} height={15} width={300} color={"green"}/>
+                <Button icon="done-all" compact="true" contentStyle={{alignSelf: "flex-end", height: 15, width: 50}}></Button>
+              </View>
               )
             } else {
               return (
@@ -140,14 +156,13 @@ export default class WeeklyScreen extends Component {
         return (
             
             <View style={styles.container}>
-                <Button
-                title="Go to Home"
-                onPress={() => this.props.navigation.navigate('Home')}
-                />
-            <SectionList
+              {this.state.compoundData? 
+           <VitaminList time="week" data = {this.state.compoundData.total} percentProgress = {this.percentProgress}/>
+          : null}
+
+            {/* <SectionList
                 sections={[
                     {title: this.state.days, data: this.compounds()},]}
-                    // {title: 'J', data: ['Jackson', 'James', 'Jillian', 'Jimmy', 'Joel', 'John', 'Julie']},
             
                 renderItem={({item}) =>
                     <View>
@@ -162,7 +177,7 @@ export default class WeeklyScreen extends Component {
             
                     renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                     keyExtractor={(item, index) => index}
-                    />
+                    /> */}
             
             </View>
         )

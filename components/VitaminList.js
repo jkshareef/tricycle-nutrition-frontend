@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {Text, View, SectionList, StyleSheet} from 'react-native'
-import VitaminDailyItem from './VitaminDailyItem';
+import VitaminItem from './VitaminItem';
 import {acceptedList} from '../helpers/acceptedList';
 
-export default class VitaminDailyList extends Component {
+export default class VitaminList extends Component {
     constructor(props) {
         super(props)
         this.state = {
@@ -61,7 +61,7 @@ export default class VitaminDailyList extends Component {
           sections={[
             {title: '', data: this.sectionListData()},
           ]}
-          renderItem={({item}) => <VitaminDailyItem compound = {item} percentProgress={this.props.percentProgress}/>}
+          renderItem={({item}) => <VitaminItem time={this.props.time} compound = {item} percentProgress={this.props.percentProgress}/>}
           renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
           keyExtractor={(item, index) => index}
         />
