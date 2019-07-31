@@ -46,7 +46,7 @@ export default class RecentMealFood extends Component {
                 {title: '', data: this.sectionListData(this.props.foodHash)},
               ]}
               renderItem={({item}) => <RecentMealItem compound = {item}/>}
-              renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+            //   renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
               keyExtractor={(item, index) => index}
         />
             

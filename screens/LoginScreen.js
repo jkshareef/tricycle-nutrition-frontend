@@ -141,7 +141,7 @@ export default class LoginScreen extends Component {
         
         return (
             <View style={{flex: 1}}>
-            <Appbar.Header style={{backgroundColor: "#023618"}}>
+            <Appbar.Header style={{backgroundColor: "#023618"}} statusBarHeight={25}>
                 {/* <Appbar.BackAction
                 onPress={this._goBack}
                 /> */}
@@ -167,9 +167,9 @@ export default class LoginScreen extends Component {
               value={this.state.password}
               onChangeText={(text) => this.setState({password: text})}/>
                 
-                    <Button
+                    {/* <Button
                     title="Go Home" 
-                    onPress={() => this.props.navigation.navigate("Home")}/>
+                    onPress={() => this.props.navigation.navigate("Home")}/> */}
                     <Button
                     onPress={this.onPressLogin}
                     title="Login"/>

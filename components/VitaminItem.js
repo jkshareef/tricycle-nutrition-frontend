@@ -39,7 +39,7 @@ export default class VitaminItem extends Component {
         readLess = () => {
             const compound = this.props.compound
             return (
-                <View> 
+                <View style={styles.container}> 
                         <Text style={{marginTop: 10}}
                         numberOfLines = {10}>
                         {compound.description}
@@ -95,7 +95,10 @@ const styles = StyleSheet.create({
     button: {
         alignItems: 'flex-end',
         padding: 10
-      }
+      },
+    container: {
+        backgroundColor: '#F6F4F3'
+    }
 })
 
 // return (

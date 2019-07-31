@@ -77,7 +77,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
                 navigationOptions: {
                   tabBarLabel: "Login",
                   tabBarIcon: ({focused}) => (
-                    <Icon name="pencil" size={25} color={focused ? '#FFF' : '#5E0035'}/>
+                    <Icon name="pencil" size={25} color={focused ? '#FFF' : '#950952'}/>
                   )
                 }
               },
@@ -85,21 +85,21 @@ import { Provider as PaperProvider } from 'react-native-paper';
                   navigationOptions: {
                     tabBarLabel: "Home",
                     tabBarIcon: ({focused}) => (
-                      <Icon name="home" size={25} color={focused ? '#FFF' : '#5E0035'}/>
+                      <Icon name="home" size={25} color={focused ? '#FFF' : '#950952'}/>
                     )
                   }
                 },
                 Daily: { screen: DailyScreen,
                 navigationOptions: {
                   tabBarIcon: ({focused}) => (
-                    <Icon name="calendar-check-o" size={25} color={focused ? '#FFF' : '#5E0035'}/>
+                    <Icon name="calendar-check-o" size={25} color={focused ? '#FFF' : '#950952'}/>
                   )
                 }
               },
                 Weekly: { screen: WeeklyScreen,
                   navigationOptions: {
                     tabBarIcon: ({focused}) => (
-                      <Icon name="calendar" size={25} color={focused ? '#FFF' : '#5E0035'}/>
+                      <Icon name="calendar" size={25} color={focused ? '#FFF' : '#950952'}/>
                     )
                   } 
                 }
@@ -109,7 +109,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
                         activeColor: "#950952",
                         inactiveColor: "#005C69",
                         barStyle: {backgroundColor: "#023618"},
-                        labeled: true
+                        labeled: false
                      
                }
              )
