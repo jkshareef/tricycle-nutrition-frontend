@@ -1,8 +1,9 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Button, AsyncStorage, ART, TouchableHighlight, ListView, ScrollView} from 'react-native'
+import {View, Text, StyleSheet, AsyncStorage, ART, TouchableHighlight, ListView, ScrollView} from 'react-native'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { TextInput } from 'react-native-gesture-handler';
 import { List, Checkbox } from 'react-native-paper';
+import {Button} from 'react-native-elements';
 import RecentMeal from '../components/RecentMeal'
 
 const NGROK_URL = "https://ecb0c20d.ngrok.io"
@@ -170,21 +171,32 @@ export default class HomeScreen extends Component {
             textField : {
               fontSize: 20,
               height: 40,
-              width: 400,
-              margin: 2,
+              flex: 1,
               backgroundColor: 'white',
               marginTop: 40
           },
           
           button: {
-            marginBottom: 30,
-            width: 260,
+            width: 200,
+            margin: 20,
             alignItems: 'center',
             backgroundColor: '#023618',
+            borderRadius: 30,
+          },
+          buttonCircle: {
+            margin: 10,
+            height: 150,
+            width: 150,
+            borderRadius: 100,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#023618',
+            
+
           },
           buttonText: {
             padding: 20,
-            color: 'white'
+            color: 'white',
           },
           list: {
             width: 400,
@@ -201,30 +213,35 @@ export default class HomeScreen extends Component {
           
             <ScrollView contentContainerStyle={styles.container}>
              <View style={styles.viewContainer}>
-             <TextInput style={styles.textField}
+               <View style={{flexDirection: "row"}}>
+               <TextInput style={styles.textField}
                 placeholder="Add Meal"
                 value={this.state.query}
                 onChangeText={(text) => this.setState({
                   query: text})}
                 />
-
-              <TouchableHighlight onPress={this.onAddMeal} underlayColor="white">
-                <View style={styles.button}>
+               </View>
+            
+              
+              <Button raised onPress={this.onAddMeal} title="Add Meal" containerStyle={styles.button} 
+              buttonStyle={{backgroundColor: '#023618', width: 200, borderRadius: 30}}/>
+                {/* <View style={styles.button}>
                   <Text style={styles.buttonText}>Add Meal</Text>
                 </View>
-              </TouchableHighlight>
-
-              <TouchableHighlight onPress={() => {this.props.navigation.navigate('Daily')}} underlayColor="white">
-                <View style={styles.button}>
+              </Button> */}
+                  <View style={{flex: 1, flexDirection: "row", justifyContent: "space-evenly"}}>
+              <TouchableHighlight style={styles.buttonCircle} onPress={() => {this.props.navigation.navigate('Daily')}} underlayColor="white">
+                <View>
                   <Text style={styles.buttonText}>Daily</Text>
                 </View>
               </TouchableHighlight>
            
-              <TouchableHighlight onPress={() => {this.props.navigation.navigate("Weekly")}} underlayColor="white">
-                <View style={styles.button}>
+              <TouchableHighlight style={styles.buttonCircle} onPress={() => {this.props.navigation.navigate("Weekly")}} underlayColor="white">
+                <View>
                   <Text style={styles.buttonText}>Weekly</Text>
                 </View>
               </TouchableHighlight>
+              </View>
               <List.Section>
               <List.Accordion
                   title="Most Recent Meal"
