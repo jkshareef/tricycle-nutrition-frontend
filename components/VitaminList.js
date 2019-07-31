@@ -23,7 +23,8 @@ export default class VitaminList extends Component {
       const styles = StyleSheet.create({
         container: {
          flex: 1,
-         paddingTop: 22
+         paddingTop: 22,
+         backgroundColor: '#F6F4F3'
         },
         sectionHeader: {
           paddingTop: 2,
@@ -52,7 +53,8 @@ export default class VitaminList extends Component {
             {title: '', data: this.sectionListData()},
           ]}
           renderItem={({item}) => <VitaminItem time={this.props.time} compound = {item} percentProgress={this.props.percentProgress}/>}
-          renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
+        //   renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>
+        // }
           keyExtractor={(item, index) => index}
         />
       </View>

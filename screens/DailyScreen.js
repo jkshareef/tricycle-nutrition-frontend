@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { StyleSheet, ScrollView, SectionList, Text, View, FlatList, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import {Button} from 'react-native-paper';
+import {Button, Appbar} from 'react-native-paper';
 import * as Progress from 'react-native-progress';
 import VitaminList from '../components/VitaminList'
 
@@ -108,9 +108,10 @@ export default class DailyScreen extends Component {
 
       const styles = StyleSheet.create({
         container: {
-         flex: 1,
+        //  flex: 1,
+         paddingRight: 20,
          paddingLeft: 20,
-         paddingRight: 20
+         backgroundColor: '#F6F4F3'
         },
         item: {
           padding: 10,
@@ -127,13 +128,25 @@ export default class DailyScreen extends Component {
 
        
         return (
-          
+          <View style={{flex: 1}}>
+          <Appbar.Header style={{backgroundColor: "#023618"}} statusBarHeight={25}>
+            {/* <Appbar.BackAction
+              onPress={this._goBack}
+            /> */}
+            <Appbar.Content
+              title="Daily"
+              // subtitle="Daily"
+            />
+            {/* <Appbar.Action icon="search" onPress={this._onSearch} />
+            <Appbar.Action icon="more-vert" onPress={this._onMore} /> */}
+        </Appbar.Header>
           <View style={styles.container}>
-            <ScrollView>
+            <ScrollView automaticallyAdjustContentInsets={true} automaticallyAdjustContentInsets={true} showsVerticalScrollIndicator={false}>
            {this.state.compoundData? 
            <VitaminList time = "day" data = {this.state.compoundData.total} percentProgress = {this.percentProgress}/>
           : null}
         </ScrollView>
+      </View>
       </View>
       );
     }

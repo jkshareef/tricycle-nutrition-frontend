@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import { StyleSheet, SectionList, View, Text, FlatList, AsyncStorage} from 'react-native';
+import { StyleSheet, SectionList, View, Text, FlatList, AsyncStorage, ScrollView} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { ToggleButton, Button} from 'react-native-paper';
+import { ToggleButton, Button, Appbar} from 'react-native-paper';
 import * as Progress from 'react-native-progress';
 import VitaminList from '../components/VitaminList'
+
 
 
 const NGROK_URL = "https://ecb0c20d.ngrok.io"
@@ -129,8 +130,10 @@ export default class WeeklyScreen extends Component {
 
         const styles = StyleSheet.create({
             container: {
-             flex: 1,
-             paddingTop: 22
+            //  flex: 1,
+             paddingRight: 20,
+             paddingLeft: 20,
+             backgroundColor: '#F6F4F3'
             },
             sectionHeader: {
               paddingTop: 2,
@@ -154,8 +157,20 @@ export default class WeeklyScreen extends Component {
           })
 
         return (
-            
+            <View style={{flex: 1}}>
+              <Appbar.Header style={{backgroundColor: "#023618"}} statusBarHeight={25}>
+              {/* <Appbar.BackAction
+                onPress={this._goBack}
+              /> */}
+              <Appbar.Content
+                title="Weekly"
+                // subtitle="Weekly"
+              />
+              {/* <Appbar.Action icon="search" onPress={this._onSearch} />
+              <Appbar.Action icon="more-vert" onPress={this._onMore} /> */}
+          </Appbar.Header>
             <View style={styles.container}>
+              <ScrollView automaticallyAdjustContentInsets={false} showsVerticalScrollIndicator={false}>
               {this.state.compoundData? 
            <VitaminList time="week" data = {this.state.compoundData.total} percentProgress = {this.percentProgress}/>
           : null}
@@ -178,7 +193,8 @@ export default class WeeklyScreen extends Component {
                     renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
                     keyExtractor={(item, index) => index}
                     /> */}
-            
+             </ScrollView>
+            </View>
             </View>
         )
     }

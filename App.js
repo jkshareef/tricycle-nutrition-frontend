@@ -4,7 +4,9 @@ import LoginScreen from './screens/LoginScreen';
 import HomeScreen from './screens/HomeScreen'
 import DailyScreen from './screens/DailyScreen'
 import WeeklyScreen from './screens/WeeklyScreen'
-import { createStackNavigator, createAppContainer } from "react-navigation";
+import { createStackNavigator, createSwitchNavigator, createAppContainer } from "react-navigation";
+import { createMaterialBottomTabNavigator} from 'react-navigation-material-bottom-tabs';
+import Icon from 'react-native-vector-icons/FontAwesome'
 import { Provider as PaperProvider } from 'react-native-paper';
 
 
@@ -69,22 +71,65 @@ import { Provider as PaperProvider } from 'react-native-paper';
                 }
         
               );
+
+              const BottomTabNavigator = createMaterialBottomTabNavigator({
+                Login: {screen: LoginScreen,
+                navigationOptions: {
+                  tabBarLabel: "Login",
+                  tabBarIcon: ({focused}) => (
+                    <Icon name="pencil" size={25} color={focused ? '#FFF' : '#950952'}/>
+                  )
+                }
+              },
+                Home: {screen: HomeScreen, 
+                  navigationOptions: {
+                    tabBarLabel: "Home",
+                    tabBarIcon: ({focused}) => (
+                      <Icon name="home" size={25} color={focused ? '#FFF' : '#950952'}/>
+                    )
+                  }
+                },
+                Daily: { screen: DailyScreen,
+                navigationOptions: {
+                  tabBarIcon: ({focused}) => (
+                    <Icon name="calendar-check-o" size={25} color={focused ? '#FFF' : '#950952'}/>
+                  )
+                }
+              },
+                Weekly: { screen: WeeklyScreen,
+                  navigationOptions: {
+                    tabBarIcon: ({focused}) => (
+                      <Icon name="calendar" size={25} color={focused ? '#FFF' : '#950952'}/>
+                    )
+                  } 
+                }
+              },
+               {
+                        initialRouteName: 'Login',
+                        activeColor: "#950952",
+                        inactiveColor: "#005C69",
+                        barStyle: {backgroundColor: "#023618"},
+                        labeled: false
+                     
+               }
+             )
         
-              const LoginNavigator = createStackNavigator(
+              const AppSwitchNavigator = createSwitchNavigator(
                 {
-                  Login: LoginScreen,
-                  Home: HomeScreen,
-                  Daily: DailyScreen,
-                  Weekly: WeeklyScreen
+                  Login: {screen: LoginScreen},
+                  Home: {screen: HomeScreen},
+                  Daily: {screen: DailyScreen},
+                  Weekly: {screen: WeeklyScreen},
+                  Dashboard: {screen: BottomTabNavigator},
 
                 },
                 {
-                  initialRouteName: "Login"
+                  initialRouteName: "Home"
                 }
 
-              );
+              )
         
-              const AppContainer = createAppContainer(LoginNavigator)
+              const AppContainer = createAppContainer(BottomTabNavigator)
         
           return(
             <PaperProvider>

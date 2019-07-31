@@ -34,7 +34,7 @@ export default class RecentMealItem extends Component {
         const compound = this.props.compound
         return (
             <View>
-                    <Text style={{marginTop: 5, paddingRight: 10}}
+                    <Text style={{marginTop: 5, paddingRight: 20}}
                         numberOfLines = {2}>
                         {compound.description}
                     </Text>
@@ -42,7 +42,7 @@ export default class RecentMealItem extends Component {
                         style={styles.button}
                         onPress={this.handlePress}
                         >
-                        <Text> Show More </Text>
+                        <Text style={{paddingRight: 20}}> Show More </Text>
                     </TouchableHighlight>
             </View>
         )
@@ -52,7 +52,7 @@ export default class RecentMealItem extends Component {
         const compound = this.props.compound
         return (
             <View> 
-                <Text style={{marginTop: 5, paddingRight: 10}}
+                <Text style={{marginTop: 5, paddingRight: 20}}
                 numberOfLines = {10}>
                 {compound.description}
                 </Text>
@@ -60,7 +60,7 @@ export default class RecentMealItem extends Component {
                     style={styles.button}
                     onPress={this.handlePress}
                     >
-                    <Text> Show Less</Text>
+                    <Text style={{paddingRight: 20}}> Show Less</Text>
                 </TouchableHighlight>     
             </View>
         )

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, TextInput, View, Button, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
+import {Appbar} from 'react-native-paper';
 
 NGROK_URL = "https://ecb0c20d.ngrok.io"
 
@@ -117,7 +118,7 @@ export default class LoginScreen extends Component {
         const styles = StyleSheet.create({
        
             container: {
-                flex: 1,
+                // flex: 1,
                 backgroundColor: '#F6F4F3'
             }
             ,
@@ -139,6 +140,18 @@ export default class LoginScreen extends Component {
         
         
         return (
+            <View style={{flex: 1}}>
+            <Appbar.Header style={{backgroundColor: "#023618"}} statusBarHeight={25}>
+                {/* <Appbar.BackAction
+                onPress={this._goBack}
+                /> */}
+                <Appbar.Content
+                title="TriCycle"
+                // subtitle="Login"
+                />
+                {/* <Appbar.Action icon="search" onPress={this._onSearch} />
+                <Appbar.Action icon="more-vert" onPress={this._onMore} /> */}
+            </Appbar.Header>
             <View style={styles.container}>
               <TextInput
               style={styles.textFieldUser}
@@ -154,9 +167,9 @@ export default class LoginScreen extends Component {
               value={this.state.password}
               onChangeText={(text) => this.setState({password: text})}/>
                 
-                    <Button
+                    {/* <Button
                     title="Go Home" 
-                    onPress={() => this.props.navigation.navigate("Home")}/>
+                    onPress={() => this.props.navigation.navigate("Home")}/> */}
                     <Button
                     onPress={this.onPressLogin}
                     title="Login"/>
@@ -166,6 +179,7 @@ export default class LoginScreen extends Component {
                     onPress={() => this.onPressSignup}/>
                     <Text style={{textAlign: "center"}}>Don't have an account? Click here to sign-up</Text>
                 
+            </View>
             </View>
         )
     }

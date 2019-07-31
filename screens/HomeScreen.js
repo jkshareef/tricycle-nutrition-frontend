@@ -1,13 +1,11 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, AsyncStorage, ART, TouchableHighlight, ListView, ScrollView} from 'react-native'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { TextInput } from 'react-native-gesture-handler';
-import { List, Checkbox } from 'react-native-paper';
+import { List, Checkbox, Appbar, TextInput} from 'react-native-paper';
 import {Button} from 'react-native-elements';
 import RecentMeal from '../components/RecentMeal'
 
 const NGROK_URL = "https://ecb0c20d.ngrok.io"
-
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -17,7 +15,8 @@ export default class HomeScreen extends Component {
       compoundData: null,
       foodNames: null,
       foodItems: null,
-      expanded: true
+      expanded: true,
+
       
     
     }
@@ -123,7 +122,7 @@ export default class HomeScreen extends Component {
         'Content-Type' : 'application/json'
       }
     }
-    fetch(NGROK_URL + '/api/v1/add/${query}', config)
+    fetch(NGROK_URL + `/api/v1/add/${query}`, config)
     .then(resp=>resp.json())
     .then(this.setState({
       query: '',
@@ -159,9 +158,6 @@ export default class HomeScreen extends Component {
         const styles = StyleSheet.create({
             container: {
               backgroundColor: '#F6F4F3',
-              
-              
-
             },
             viewContainer : {
               flex: 1,
@@ -170,8 +166,8 @@ export default class HomeScreen extends Component {
             },
             textField : {
               fontSize: 20,
-              height: 40,
-              flex: 1,
+              height: 50,
+              width: 300,
               backgroundColor: 'white',
               marginTop: 40
           },
@@ -210,12 +206,27 @@ export default class HomeScreen extends Component {
           // console.log(this.state.compoundData)
 
         return(
-          
-            <ScrollView contentContainerStyle={styles.container}>
+          <View>
+          <Appbar.Header style={{backgroundColor: "#023618"}} statusBarHeight={25}>
+            {/* <Appbar.BackAction
+              onPress={this._goBack}
+            /> */}
+            <Appbar.Content
+              title="Home"
+              // subtitle="Home"
+            />
+            {/* <Appbar.Action icon="search" onPress={this._onSearch} />
+            <Appbar.Action icon="more-vert" onPress={this._onMore} /> */}
+        </Appbar.Header>
+            <ScrollView contentContainerStyle={styles.container} 
+            automaticallyAdjustContentInsets={true} showsVerticalScrollIndicator={false}
+            >
              <View style={styles.viewContainer}>
                <View style={{flexDirection: "row"}}>
-               <TextInput style={styles.textField}
-                placeholder="Add Meal"
+               <TextInput 
+                mode="flat"
+                style={styles.textField}
+                label="Add Meal"
                 value={this.state.query}
                 onChangeText={(text) => this.setState({
                   query: text})}
@@ -230,7 +241,7 @@ export default class HomeScreen extends Component {
                 </View>
               </Button> */}
                   <View style={{flex: 1, flexDirection: "row", justifyContent: "space-evenly"}}>
-              <TouchableHighlight style={styles.buttonCircle} onPress={() => {this.props.navigation.navigate('Daily')}} underlayColor="white">
+              {/* <TouchableHighlight style={styles.buttonCircle} onPress={() => {this.props.navigation.navigate('Daily')}} underlayColor="white">
                 <View>
                   <Text style={styles.buttonText}>Daily</Text>
                 </View>
@@ -240,7 +251,7 @@ export default class HomeScreen extends Component {
                 <View>
                   <Text style={styles.buttonText}>Weekly</Text>
                 </View>
-              </TouchableHighlight>
+              </TouchableHighlight> */}
               </View>
               <List.Section>
               <List.Accordion
@@ -273,6 +284,7 @@ export default class HomeScreen extends Component {
                 onPress={() => {this.props.navigation.navigate('Login')}}/> */}
                 </View>
                   </ScrollView>
+                  </View>
                
            
            
