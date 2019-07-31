@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import {StyleSheet, Text, View, TouchableHighlight} from 'react-native'
+import {StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+
 
 
 
@@ -16,6 +17,18 @@ export default class RecentMealItem extends Component {
             expanded: !this.state.expanded
         })
     }
+
+    renderViewMore = (onPress) => {
+        return(
+          <Text onPress={onPress}>View more</Text>
+        )
+      }
+
+      renderViewLess = (onPress) => {
+        return(
+          <Text onPress={onPress}>View less</Text>
+        )
+      }
 
     readMore = () => {
         const compound = this.props.compound
@@ -58,6 +71,8 @@ capitalize = (string) => {
     arr[0] = arr[0].charAt(0).toUpperCase() + arr[0].slice(1)
     return arr.join(' ')
 }
+
+
 
     render() {
         const {compound, index} = this.props
