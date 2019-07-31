@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, Button, AsyncStorage, ART, TouchableHighlight, ListView} from 'react-native'
+import {View, Text, StyleSheet, Button, AsyncStorage, ART, TouchableHighlight, ListView, ScrollView} from 'react-native'
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { TextInput } from 'react-native-gesture-handler';
 import { List, Checkbox } from 'react-native-paper';
@@ -157,11 +157,15 @@ export default class HomeScreen extends Component {
 
         const styles = StyleSheet.create({
             container: {
+              backgroundColor: '#F6F4F3',
+              
+              
+
+            },
+            viewContainer : {
               flex: 1,
               flexDirection: "column",
-              backgroundColor: '#F6F4F3',
-              alignItems: "center"
-
+              alignItems: "center",
             },
             textField : {
               fontSize: 20,
@@ -194,9 +198,33 @@ export default class HomeScreen extends Component {
           // console.log(this.state.compoundData)
 
         return(
-            <View style={styles.container}>
-             
+          
+            <ScrollView contentContainerStyle={styles.container}>
+             <View style={styles.viewContainer}>
+             <TextInput style={styles.textField}
+                placeholder="Add Meal"
+                value={this.state.query}
+                onChangeText={(text) => this.setState({
+                  query: text})}
+                />
 
+              <TouchableHighlight onPress={this.onAddMeal} underlayColor="white">
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>Add Meal</Text>
+                </View>
+              </TouchableHighlight>
+
+              <TouchableHighlight onPress={() => {this.props.navigation.navigate('Daily')}} underlayColor="white">
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>Daily</Text>
+                </View>
+              </TouchableHighlight>
+           
+              <TouchableHighlight onPress={() => {this.props.navigation.navigate("Weekly")}} underlayColor="white">
+                <View style={styles.button}>
+                  <Text style={styles.buttonText}>Weekly</Text>
+                </View>
+              </TouchableHighlight>
               <List.Section>
               <List.Accordion
                   title="Most Recent Meal"
@@ -212,40 +240,24 @@ export default class HomeScreen extends Component {
     
               </List.Section>
               {/* <View> */}
-                <TextInput style={styles.textField}
-                placeholder="Add Meal"
-                value={this.state.query}
-                onChangeText={(text) => this.setState({
-                  query: text})}
-                />
+               
                 {/* <ListView
                       dataSource={ds.cloneWithRows(this.state.filteredNames)}
                 renderRow={this.renderFoodNames} /> */}
               {/* </View> */}
               
-              <TouchableHighlight onPress={this.onAddMeal} underlayColor="white">
-                <View style={styles.button}>
-                  <Text style={styles.buttonText}>Add Meal</Text>
-                </View>
-              </TouchableHighlight>
+              
           
-              <TouchableHighlight onPress={() => {this.props.navigation.navigate('Daily')}} underlayColor="white">
-                <View style={styles.button}>
-                  <Text style={styles.buttonText}>Daily</Text>
-                </View>
-              </TouchableHighlight>
-           
-              <TouchableHighlight onPress={() => {this.props.navigation.navigate("Weekly")}} underlayColor="white">
-                <View style={styles.button}>
-                  <Text style={styles.buttonText}>Weekly</Text>
-                </View>
-              </TouchableHighlight>
+              
        
-              <Button
+              {/* <Button
                 color="#442D2D"
                 title="Login"
-                onPress={() => {this.props.navigation.navigate('Login')}}/>
-            </View>
+                onPress={() => {this.props.navigation.navigate('Login')}}/> */}
+                </View>
+                  </ScrollView>
+               
+           
            
         )
     }
