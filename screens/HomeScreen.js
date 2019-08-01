@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
-import {View, Text, StyleSheet, AsyncStorage, ART, TouchableHighlight, ListView, ScrollView} from 'react-native'
-import { createStackNavigator, createAppContainer } from 'react-navigation';
-import { List, Checkbox, Appbar, TextInput} from 'react-native-paper';
 import {Button} from 'react-native-elements';
-import RecentMeal from '../components/RecentMeal'
+import {Appbar, TextInput, Title, ActivityIndicator, Colors} from 'react-native-paper';
+import {View, Text, StyleSheet, AsyncStorage, ScrollView} from 'react-native';
+import RecentMeal from '../components/RecentMeal';
+import Icon from 'react-native-vector-icons/FontAwesome'
+
 
 const NGROK_URL = "https://f7eed1dd.ngrok.io"
 
@@ -13,8 +14,6 @@ export default class HomeScreen extends Component {
     this.state = {
       query: '', 
       compoundData: null,
-      foodNames: null,
-      foodItems: null,
       expanded: true,
 
       
@@ -33,7 +32,6 @@ export default class HomeScreen extends Component {
 
   async componentDidMount() {
     this.getRecent()
-    // this.getFoodNames()
     }
 
   async getRecent() {
@@ -56,19 +54,7 @@ export default class HomeScreen extends Component {
   
   
 
-  // getFoodNames = () => {
-    
-  //   const config = {
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     }
-  //   }
-  //   fetch("http://127.0.0.1:4041/foodnames", config)
-  //   .then(resp => resp.json())
-  //   .then(json => {
-  //     return json
-  //   })
-  // }
+  
   
 
   getToken = async () => {
@@ -122,31 +108,19 @@ export default class HomeScreen extends Component {
         'Content-Type' : 'application/json'
       }
     }
+
+    
     fetch(NGROK_URL + `/api/v1/add/${query}`, config)
     .then(resp=>resp.json())
+    .then(() => this.setState({compoundData: null}))
     .then(this.setState({
       query: '',
     }))
-    .then(json => {
-
-    })
     .then(()=> this.getRecent())
     .catch(error => console.log("Error: ", error))
   }
 
-    // searchedFoodNames = (text) => {
-    //   this.setState({
-    //     query: text
-    //   })
-      
-    //   let foodNames = this.getFoodNames().food_item
-    //   let names = foodNames.filter((foodName) => {
-    //     return foodName.name.toLowerCase().includes?(text)
-    //   })
-    //   this.setState({
-    //     filteredNames: names
-    //   })
-    // }
+   
        
 
     render() {
@@ -169,7 +143,8 @@ export default class HomeScreen extends Component {
               height: 50,
               width: 300,
               backgroundColor: 'white',
-              marginTop: 40
+              marginTop: 40,
+              textAlignVertical: "top"
           },
           
           button: {
@@ -201,22 +176,17 @@ export default class HomeScreen extends Component {
           });
 
         
-        // let ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-          // console.log("In render")
-          // console.log(this.state.compoundData)
+   
 
         return(
           <View>
           <Appbar.Header style={{backgroundColor: "#023618"}} statusBarHeight={25}>
-            {/* <Appbar.BackAction
-              onPress={this._goBack}
-            /> */}
+          
             <Appbar.Content
               title="Home"
               // subtitle="Home"
             />
-            {/* <Appbar.Action icon="search" onPress={this._onSearch} />
-            <Appbar.Action icon="more-vert" onPress={this._onMore} /> */}
+           
         </Appbar.Header>
             <ScrollView contentContainerStyle={styles.container} 
             automaticallyAdjustContentInsets={true} showsVerticalScrollIndicator={false}
@@ -225,8 +195,9 @@ export default class HomeScreen extends Component {
                <View style={{flexDirection: "row"}}>
                <TextInput 
                 mode="flat"
+                autoCapitalize="none"
                 style={styles.textField}
-                label="Add Meal"
+                label="Food"
                 value={this.state.query}
                 onChangeText={(text) => this.setState({
                   query: text})}
@@ -234,54 +205,22 @@ export default class HomeScreen extends Component {
                </View>
             
               
-              <Button raised onPress={this.onAddMeal} title="Add Meal" containerStyle={styles.button} 
+              <Button raised onPress={this.onAddFood} title="Add Food" containerStyle={styles.button} 
               buttonStyle={{backgroundColor: '#023618', width: 200, borderRadius: 30}}/>
-                {/* <View style={styles.button}>
-                  <Text style={styles.buttonText}>Add Meal</Text>
-                </View>
-              </Button> */}
-                  <View style={{flex: 1, flexDirection: "row", justifyContent: "space-evenly"}}>
-              {/* <TouchableHighlight style={styles.buttonCircle} onPress={() => {this.props.navigation.navigate('Daily')}} underlayColor="white">
-                <View>
-                  <Text style={styles.buttonText}>Daily</Text>
-                </View>
-              </TouchableHighlight>
-           
-              <TouchableHighlight style={styles.buttonCircle} onPress={() => {this.props.navigation.navigate("Weekly")}} underlayColor="white">
-                <View>
-                  <Text style={styles.buttonText}>Weekly</Text>
-                </View>
-              </TouchableHighlight> */}
-              </View>
-              <List.Section>
-              <List.Accordion
-                  title="Most Recent Meal"
-                  style={styles.list}
-                  left={props => <List.Icon {...props} icon="restaurant-menu" />}
-                  expanded={this.state.expanded}
-                  onPress={this.handlePress}
-                >
-                  
+              <Button raised onPress={this.onAddMeal} title="" icon={
+                  <Icon
+                    name="plus"
+                    size={15}
+                    color="white"
+                  />}
+              buttonStyle={{backgroundColor: '#023618', height: 70, width: 70, borderRadius: 170}}/>
+             
+                
+                  <Title style={{marginTop: 35}}>Most Recent Meal</Title>
+                  {this.state.compoundData? null:<ActivityIndicator animating={true} size={"large"} color={Colors.green800} style={{marginTop: 40}} />}
                   {this.state.compoundData? <RecentMeal meals={this.state.compoundData}/>:null}
-                  
-                </List.Accordion>
-    
-              </List.Section>
-              {/* <View> */}
-               
-                {/* <ListView
-                      dataSource={ds.cloneWithRows(this.state.filteredNames)}
-                renderRow={this.renderFoodNames} /> */}
-              {/* </View> */}
-              
-              
-          
-              
-       
-              {/* <Button
-                color="#442D2D"
-                title="Login"
-                onPress={() => {this.props.navigation.navigate('Login')}}/> */}
+                
+                
                 </View>
                   </ScrollView>
                   </View>

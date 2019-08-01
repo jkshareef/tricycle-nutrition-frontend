@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import RecentMealItem from './RecentMealItem';
-import {List} from 'react-native-paper';
+import {List, DataTable} from 'react-native-paper';
 import {Text, SectionList, StyleSheet} from 'react-native';
-import {acceptedList} from '../helpers/acceptedList';
+import {acceptedList} from '../helpers/acceptedList'
 
 
 
@@ -14,46 +14,31 @@ export default class RecentMealFood extends Component {
             expanded: false
         }
     }
-    handlePress = () =>
-    this.setState({
-      expanded: !this.state.expanded
-    });
 
-    sectionListData = (foodHash) => {
-       
-        return (
-          [].concat.apply([], Object.values(foodHash)).filter(compound => acceptedList.includes(compound.name))
-        )
-      } 
+    handlePress = () => {
+      this.setState({
+        expanded: !this.state.expanded
+      })
+    }
+
 
     render() {
         return (
-            <List.Accordion
-          key = {this.props.index}
-          title={[].concat.apply([], Object.values(this.props.foodHash))[0].food}
-          style={{width: 400, alignItems: "center"}}
-          left={props => <List.Icon {...props} icon="restaurant" />}
-          expanded={this.state.expanded}
-          onPress={this.handlePress}
-          >
-            
-            {/* {[].concat.apply([], Object.values(foodHash))
-            .filter(compound => acceptedList.includes(compound.name))
-            .map((compound, idx) => */}
-    
-            <SectionList
-              sections={[
-                {title: '', data: this.sectionListData(this.props.foodHash)},
-              ]}
-              renderItem={({item}) => <RecentMealItem compound = {item}/>}
-            //   renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-              keyExtractor={(item, index) => index}
-        />
-            
-            
-          </List.Accordion>
-        )
+          <DataTable>
+          <DataTable.Header>
+            <DataTable.Title>{Object.values(this.props.foodHash)[0][0].food}</DataTable.Title>
+            <DataTable.Title numeric>Amount</DataTable.Title>
+            <DataTable.Title numeric>RDV</DataTable.Title>
+          </DataTable.Header>
+
+           {[].concat.apply([], Object.values(this.props.foodHash)).filter(compound => acceptedList.includes(compound.name)).map((compound, idx) => 
+          <RecentMealItem compound={compound}/>)}
+
+          </DataTable>
+          )
+         
     }
+    
 }
 
 const styles = StyleSheet.create({

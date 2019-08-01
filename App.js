@@ -106,10 +106,11 @@ import { Provider as PaperProvider } from 'react-native-paper';
               },
                {
                         initialRouteName: 'Login',
-                        activeColor: "#950952",
-                        inactiveColor: "#005C69",
+                        activeColor: "#FFF",
+                        inactiveColor: "#757876",
                         barStyle: {backgroundColor: "#023618"},
-                        labeled: false
+                        shifting: false,
+                        labeled: true
                      
                }
              )
