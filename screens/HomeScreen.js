@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Button} from 'react-native-elements';
-import {Appbar, TextInput, Title, ActivityIndicator, Colors} from 'react-native-paper';
+import {Appbar, TextInput, Title, ActivityIndicator, Colors, Banner} from 'react-native-paper';
 import {View, Text, StyleSheet, AsyncStorage, ScrollView} from 'react-native';
 import RecentMeal from '../components/RecentMeal';
 import Icon from 'react-native-vector-icons/FontAwesome'
@@ -16,9 +16,7 @@ export default class HomeScreen extends Component {
       foodList: [],
       compoundData: null,
       expanded: true,
-
-      
-    
+      visible: false
     }
     this.getRecent = this.getRecent.bind(this)
   }
@@ -90,11 +88,16 @@ export default class HomeScreen extends Component {
   this.setState({
     expanded: !this.state.expanded
   });
+
+ 
   
   onAddFood = () => {
     this.setState((state) => ({
-      foodNames: state.foodList.push(state.query)
+        foodList: [...state.foodList, state.query],
+        bannerMessage: this.state.query,
+        visible: true
     }))
+
     this.setState({
       query: ''
     })
@@ -135,7 +138,7 @@ export default class HomeScreen extends Component {
 
     render() {
 
-
+      const {visible} = this.state
       
       
 
@@ -198,6 +201,27 @@ export default class HomeScreen extends Component {
             />
            
         </Appbar.Header>
+        <Banner
+          visible={this.state.visible}
+          actions={[
+            {
+              label: 'Got it',
+              onPress: () => this.setState({ visible: false }),
+            }
+          ]}
+        >
+        {`${this.state.bannerMessage} was successfully added. Add more food items or submit meal "+" when ready.`}
+        </Banner>
+        {/* <Snackbar
+          visible={this.state.visible}
+          onDismiss={() => this.setState({ visible: false })}
+          action={{
+            label: '',
+            onPress: () => () => this.setState({ visible: false })
+          }}
+        >
+          {`${this.state.snackMessage} was successfully added`}
+        </Snackbar> */}
             <ScrollView contentContainerStyle={styles.container} 
             automaticallyAdjustContentInsets={true} showsVerticalScrollIndicator={false}
             >

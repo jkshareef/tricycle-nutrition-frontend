@@ -26,7 +26,7 @@ export default class RecentMealFood extends Component {
         return (
           <DataTable>
           <DataTable.Header>
-            <DataTable.Title>{Object.values(this.props.foodHash)[0][0].food}</DataTable.Title>
+            <DataTable.Title style={{fontSize: 8}}>{Object.values(this.props.foodHash)[0][0].food}</DataTable.Title>
             <DataTable.Title numeric>Amount</DataTable.Title>
             <DataTable.Title numeric>RDV</DataTable.Title>
           </DataTable.Header>
