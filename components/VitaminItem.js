@@ -70,10 +70,10 @@ export default class VitaminItem extends Component {
                 <Text style={styles.textHeader}>{this.capitalize(compound.name)}</Text>
                 {this.props.time === "week"?
                 <Text>
-                {compound.amount}/{compound.rdv * 7}{compound.units} RWV
+                {compound.amount.toFixed(2)}/{compound.rdv * 7}{compound.units} RWV
                 </Text>:
                 <Text>
-                    {compound.amount}/{compound.rdv}{compound.units} RDV
+                    {compound.amount.toFixed(2)}/{compound.rdv}{compound.units} RDV
                 </Text>}
             
                 {this.props.percentProgress(compound)}

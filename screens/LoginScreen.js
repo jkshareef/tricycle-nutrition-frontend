@@ -3,7 +3,7 @@ import {StyleSheet, Text, TextInput, View, Button, AsyncStorage} from 'react-nat
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import {Appbar} from 'react-native-paper';
 
-NGROK_URL = "https://f7eed1dd.ngrok.io"
+const URL = "http://localhost:3000"
 
 
 
@@ -35,7 +35,7 @@ export default class LoginScreen extends Component {
             body: JSON.stringify(payload)
         }
         this.clearToken()
-        fetch(NGROK_URL + '/api/v1/login', config)
+        fetch(URL + '/api/v1/login', config)
         .then(resp => resp.json())
         .then(json => {
             if(json && json.jwt) {
@@ -55,7 +55,7 @@ export default class LoginScreen extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(payload)
         }
-        fetch(NGROK_URL + '/api/v1/users', config)
+        fetch(URL + '/api/v1/users', config)
         .then(resp => resp.json())
         .then(json => {
             if(json && json.jwt) {

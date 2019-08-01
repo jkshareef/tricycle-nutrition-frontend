@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import { StyleSheet, ScrollView, SectionList, Text, View, FlatList, AsyncStorage} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
-import {Button, Appbar} from 'react-native-paper';
+import {Button, Appbar, ProgressBar, Colors} from 'react-native-paper';
 import * as Progress from 'react-native-progress';
 import VitaminList from '../components/VitaminList'
 
-const NGROK_URL = "https://f7eed1dd.ngrok.io"
+const URL = "http://localhost:3000"
 
 
 
@@ -51,7 +51,7 @@ export default class DailyScreen extends Component {
         }
         
       }
-      fetch(NGROK_URL + '/api/v1/food/day', config)
+      fetch(URL + '/api/v1/food/day', config)
       .then(resp => resp.json())
       .then(json => {
         this.setState({

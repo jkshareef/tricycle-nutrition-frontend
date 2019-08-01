@@ -7,7 +7,7 @@ import VitaminList from '../components/VitaminList'
 
 
 
-const NGROK_URL = "https://f7eed1dd.ngrok.io"
+const URL = "http://localhost:3000"
 export default class WeeklyScreen extends Component {
     constructor(props) {
         super(props)
@@ -51,7 +51,7 @@ export default class WeeklyScreen extends Component {
             }
             
           }
-          fetch(NGROK_URL + '/api/v1/food/week', config)
+          fetch(URL + '/api/v1/food/week', config)
           .then(resp => resp.json())
           .then(json => {
             this.setState({

@@ -5,6 +5,7 @@ import {DataTable} from 'react-native-paper';
 
 
 
+
 export default class RecentMealItem extends Component {
     constructor(props) {
         super(props)
@@ -30,6 +31,11 @@ export default class RecentMealItem extends Component {
           <Text onPress={onPress}>View less</Text>
         )
       }
+
+
+    moreInfo = () => {
+
+    }
 
     readMore = () => {
         const compound = this.props.compound

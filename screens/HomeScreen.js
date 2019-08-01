@@ -6,7 +6,7 @@ import RecentMeal from '../components/RecentMeal';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 
-const NGROK_URL = "https://f7eed1dd.ngrok.io"
+const URL = "http://localhost:3000"
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -41,7 +41,7 @@ export default class HomeScreen extends Component {
           'Authorization' : 'Bearer ' + token
         }
       }
-      fetch(NGROK_URL + '/api/v1/food/recent', config)
+      fetch(URL + '/api/v1/food/recent', config)
       .then(resp => resp.json())
       .then(json => {
         this.setState({
@@ -121,7 +121,7 @@ export default class HomeScreen extends Component {
     }
 
     
-    fetch(NGROK_URL + `/api/v1/add/${this.state.foodList}`, config)
+    fetch(URL + `/api/v1/add/${this.state.foodList}`, config)
     .then(resp=>resp.json())
     .then(() => this.setState({compoundData: null}))
     // .then(this.setState({
