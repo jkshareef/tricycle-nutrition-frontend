@@ -13,6 +13,7 @@ export default class HomeScreen extends Component {
     super(props)
     this.state = {
       query: '', 
+      foodList: [],
       compoundData: null,
       expanded: true,
 
@@ -90,17 +91,24 @@ export default class HomeScreen extends Component {
     expanded: !this.state.expanded
   });
   
-  
+  onAddFood = () => {
+    this.setState((state) => ({
+      foodNames: state.foodList.push(state.query)
+    }))
+    this.setState({
+      query: ''
+    })
+  }
 
   onAddMeal = () => {
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = today.getFullYear();
+    // let today = new Date();
+    // let dd = String(today.getDate()).padStart(2, '0');
+    // let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    // let yyyy = today.getFullYear();
 
-    today = mm + '-' + dd + '-' + yyyy;
+    // today = mm + '-' + dd + '-' + yyyy;
     const token = this.state.token
-    const query = this.state.query
+    // const query = this.state.query
     const config = {
       method: 'POST',
       headers: {
@@ -110,14 +118,16 @@ export default class HomeScreen extends Component {
     }
 
     
-    fetch(NGROK_URL + `/api/v1/add/${query}`, config)
+    fetch(NGROK_URL + `/api/v1/add/${this.state.foodList}`, config)
     .then(resp=>resp.json())
     .then(() => this.setState({compoundData: null}))
-    .then(this.setState({
-      query: '',
-    }))
+    // .then(this.setState({
+    //   query: '',
+    // }))
     .then(()=> this.getRecent())
     .catch(error => console.log("Error: ", error))
+    
+    
   }
 
    
