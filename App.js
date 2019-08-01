@@ -77,7 +77,7 @@ import { Provider as PaperProvider } from 'react-native-paper';
                 navigationOptions: {
                   tabBarLabel: "Login",
                   tabBarIcon: ({focused}) => (
-                    <Icon name="pencil" size={25} color={focused ? '#FFF' : '#950952'}/>
+                    <Icon name="pencil" size={25} color={focused ? '#FFF' : '#757876'}/>
                   )
                 }
               },
@@ -85,21 +85,21 @@ import { Provider as PaperProvider } from 'react-native-paper';
                   navigationOptions: {
                     tabBarLabel: "Home",
                     tabBarIcon: ({focused}) => (
-                      <Icon name="home" size={25} color={focused ? '#FFF' : '#950952'}/>
+                      <Icon name="home" size={25} color={focused ? '#FFF' : '#757876'}/>
                     )
                   }
                 },
                 Daily: { screen: DailyScreen,
                 navigationOptions: {
                   tabBarIcon: ({focused}) => (
-                    <Icon name="calendar-check-o" size={25} color={focused ? '#FFF' : '#950952'}/>
+                    <Icon name="calendar-check-o" size={25} color={focused ? '#FFF' : '#757876'}/>
                   )
                 }
               },
                 Weekly: { screen: WeeklyScreen,
                   navigationOptions: {
                     tabBarIcon: ({focused}) => (
-                      <Icon name="calendar" size={25} color={focused ? '#FFF' : '#950952'}/>
+                      <Icon name="calendar" size={25} color={focused ? '#FFF' : '#757876'}/>
                     )
                   } 
                 }

@@ -5,7 +5,7 @@ import { List, Checkbox, Appbar, TextInput} from 'react-native-paper';
 import {Button} from 'react-native-elements';
 import RecentMeal from '../components/RecentMeal'
 
-const NGROK_URL = "https://ecb0c20d.ngrok.io"
+const NGROK_URL = "https://f7eed1dd.ngrok.io"
 
 export default class HomeScreen extends Component {
   constructor(props) {

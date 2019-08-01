@@ -5,7 +5,7 @@ import {Button, Appbar} from 'react-native-paper';
 import * as Progress from 'react-native-progress';
 import VitaminList from '../components/VitaminList'
 
-const NGROK_URL = "https://ecb0c20d.ngrok.io"
+const NGROK_URL = "https://f7eed1dd.ngrok.io"
 
 
 

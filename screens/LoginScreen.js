@@ -3,7 +3,7 @@ import {StyleSheet, Text, TextInput, View, Button, AsyncStorage} from 'react-nat
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import {Appbar} from 'react-native-paper';
 
-NGROK_URL = "https://ecb0c20d.ngrok.io"
+NGROK_URL = "https://f7eed1dd.ngrok.io"
 
 
 

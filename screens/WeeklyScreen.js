@@ -7,7 +7,7 @@ import VitaminList from '../components/VitaminList'
 
 
 
-const NGROK_URL = "https://ecb0c20d.ngrok.io"
+const NGROK_URL = "https://f7eed1dd.ngrok.io"
 export default class WeeklyScreen extends Component {
     constructor(props) {
         super(props)
