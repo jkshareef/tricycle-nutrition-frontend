@@ -7,7 +7,10 @@ import VitaminList from '../components/VitaminList'
 
 
 
-const NGROK_URL = "https://f7eed1dd.ngrok.io"
+// const URL = "http://localhost:3000"
+// const URL = "http://77b3767e.ngrok.io"
+const URL = "https://tricycle-nutrition.herokuapp.com"
+
 export default class WeeklyScreen extends Component {
     constructor(props) {
         super(props)
@@ -51,7 +54,7 @@ export default class WeeklyScreen extends Component {
             }
             
           }
-          fetch(NGROK_URL + '/api/v1/food/week', config)
+          fetch(URL + '/api/v1/food/week', config)
           .then(resp => resp.json())
           .then(json => {
             this.setState({
@@ -62,24 +65,6 @@ export default class WeeklyScreen extends Component {
           }
          
     
-          compounds = () => {
-            result = []
-            if (this.state.compoundData !== null) {
-              for (let i = 0; i < Object.keys(this.state.compoundData.total).length; i++) {
-                result.push({
-                  name: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].name, 
-                  amount: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].amount,
-                  rdv: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].rdv,
-                  description: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].description,
-                  units: this.state.compoundData.total[Object.keys(this.state.compoundData.total)[i]].units,
-
-                })
-                }
-                return result
-              } else {
-                return ["Loading..."]
-            }
-           }
 
            percentProgress = (compound) => {
             const percentage = compound.amount / (compound.rdv * 7)

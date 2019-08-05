@@ -3,7 +3,9 @@ import {StyleSheet, Text, TextInput, View, Button, AsyncStorage} from 'react-nat
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import {Appbar} from 'react-native-paper';
 
-NGROK_URL = "https://f7eed1dd.ngrok.io"
+// const URL = "http://localhost:3000"
+// const URL = "http://77b3767e.ngrok.io"
+const URL = "https://tricycle-nutrition.herokuapp.com/"
 
 
 
@@ -35,18 +37,19 @@ export default class LoginScreen extends Component {
             body: JSON.stringify(payload)
         }
         this.clearToken()
-        fetch(NGROK_URL + '/api/v1/login', config)
+        fetch(URL + '/api/v1/login', config)
         .then(resp => resp.json())
         .then(json => {
             if(json && json.jwt) {
                 this.saveToken(json.jwt)
+                this.goHome()
             }
         })
-        .then(this.goHome())
        .catch(error => console.log('Error: ', error))
     }
 
     onPressSignup = () => {
+        this.clearToken()
         const username = this.state.username
         const password = this.state.password
         const payload = {user: {username: username, password: password}}
@@ -55,14 +58,14 @@ export default class LoginScreen extends Component {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify(payload)
         }
-        fetch(NGROK_URL + '/api/v1/users', config)
+        fetch(URL + '/api/v1/users', config)
         .then(resp => resp.json())
         .then(json => {
             if(json && json.jwt) {
                 this.saveToken(json.jwt)
+                this.goHome()
             }
         })
-        .then(this.goHome())
         .catch(error => console.log('Error: ', error))
     }
 
@@ -71,6 +74,8 @@ export default class LoginScreen extends Component {
     saveToken = async (jwt) => {
     try {
         await AsyncStorage.setItem('jwt', jwt);
+        debugger
+
     } catch (error) {
         // Error saving data
     }
@@ -97,11 +102,14 @@ export default class LoginScreen extends Component {
         }
 
     goHome = async () => {
+        debugger
         try {
             const token = await AsyncStorage.getItem('jwt')
             if (token !== null) {
+                debugger
                 this.props.navigation.navigate('Home')
             } else {
+                debugger
                 return null
             }
         } catch (error) {
@@ -175,8 +183,7 @@ export default class LoginScreen extends Component {
                     title="Login"/>
                     <Button 
                     onPress={this.onPressSignup}
-                    title="Sign up"
-                    onPress={() => this.onPressSignup}/>
+                    title="Sign up"/>
                     <Text style={{textAlign: "center"}}>Don't have an account? Click here to sign-up</Text>
                 
             </View>

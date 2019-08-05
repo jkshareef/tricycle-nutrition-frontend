@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import {StyleSheet, Text, View, TouchableHighlight} from 'react-native';
+import {DataTable} from 'react-native-paper';
+
 
 
 
@@ -29,6 +31,11 @@ export default class RecentMealItem extends Component {
           <Text onPress={onPress}>View less</Text>
         )
       }
+
+
+    moreInfo = () => {
+
+    }
 
     readMore = () => {
         const compound = this.props.compound
@@ -78,18 +85,23 @@ capitalize = (string) => {
         const {compound, index} = this.props
         return (
 
+            <DataTable.Row>
+                <DataTable.Cell>{compound.name}</DataTable.Cell>
+                <DataTable.Cell numeric>{compound.amount}{compound.units}</DataTable.Cell>
+                <DataTable.Cell numeric>{compound.rdv}{compound.units}</DataTable.Cell>
+          </DataTable.Row>
 
-            <View>
-                <Text style={styles.textHeader}>{this.capitalize(compound.name)}</Text>
-                {this.props.time === "week"?
-                <Text>
-                {compound.amount}/{compound.rdv * 7}{compound.units} RWV
-                </Text>:
-                <Text>
-                    {compound.amount}/{compound.rdv}{compound.units} RDV
-                </Text>}
-                {this.state.expanded? this.readLess() : this.readMore()}
-            </View>
+            // <View>
+            //     <Text style={styles.textHeader}>{this.capitalize(compound.name)}</Text>
+            //     {this.props.time === "week"?
+            //     <Text>
+            //     {compound.amount}/{compound.rdv * 7}{compound.units} RWV
+            //     </Text>:
+            //     <Text>
+            //         {compound.amount}/{compound.rdv}{compound.units} RDV
+            //     </Text>}
+            //     {this.state.expanded? this.readLess() : this.readMore()}
+            // </View>
             
                 // <List.Item
                 //     key= {index} 
