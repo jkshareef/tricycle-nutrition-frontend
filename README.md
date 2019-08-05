@@ -1,7 +1,7 @@
 # TriCycle Nutrition App
 
 
-TriCycle is a mobile nutritioon app which tracks users vitamins and minerals intake. Users are able to input their meals and have all of the nutrition information, including those micro-nutrieents not typically found in the nutrition facts. The App is pulling from a USDA Food API to get the nutrition information.
+TriCycle is a mobile nutrition app which tracks users vitamins and minerals intake. Users are able to input their meals and have all of the nutrition information, including those micro-nutrieents not typically found in the nutrition facts. The App is pulling from a USDA Food API to get the nutrition information.
 
 ## Installation and Setup
 
