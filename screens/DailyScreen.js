@@ -5,7 +5,9 @@ import {Button, Appbar, ProgressBar, Colors} from 'react-native-paper';
 import * as Progress from 'react-native-progress';
 import VitaminList from '../components/VitaminList'
 
-const URL = "http://localhost:3000"
+// const URL = "http://localhost:3000"
+// const URL = "http://77b3767e.ngrok.io"
+const URL = "https://tricycle-nutrition.herokuapp.com/"
 
 
 

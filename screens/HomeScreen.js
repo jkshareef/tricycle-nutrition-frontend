@@ -6,7 +6,9 @@ import RecentMeal from '../components/RecentMeal';
 import Icon from 'react-native-vector-icons/FontAwesome'
 
 
-const URL = "http://localhost:3000"
+// const URL = "http://localhost:3000"
+// const URL = "http://77b3767e.ngrok.io"
+const URL = "https://tricycle-nutrition.herokuapp.com"
 
 export default class HomeScreen extends Component {
   constructor(props) {
@@ -104,6 +106,7 @@ export default class HomeScreen extends Component {
   }
 
   onAddMeal = () => {
+    this.setState({compoundData: null})
     // let today = new Date();
     // let dd = String(today.getDate()).padStart(2, '0');
     // let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
@@ -123,11 +126,13 @@ export default class HomeScreen extends Component {
     
     fetch(URL + `/api/v1/add/${this.state.foodList}`, config)
     .then(resp=>resp.json())
-    .then(() => this.setState({compoundData: null}))
     // .then(this.setState({
     //   query: '',
     // }))
     .then(()=> this.getRecent())
+    .then(this.setState({
+      foodList: []
+    }))
     .catch(error => console.log("Error: ", error))
     
     

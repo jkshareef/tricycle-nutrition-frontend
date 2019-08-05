@@ -40,35 +40,10 @@ export default class RecentMeal extends Component {
     
         
         return(
-          
+        this.props.meals.data?
         this.props.meals.data.map((foodHash, index) => 
           <RecentMealFood index = {index} foodHash = {foodHash}/>
-        //   <List.Accordion
-        //   key = {index}
-        //   title={[].concat.apply([], Object.values(foodHash))[0].food}
-        //   style={{width: 400, alignItems: "center"}}
-        //   left={props => <List.Icon {...props} icon="restaurant" />}
-        //   expanded={this.state.expanded}
-        //   onPress={this.handlePress}
-        //   >
-            
-        //     {/* {[].concat.apply([], Object.values(foodHash))
-        //     .filter(compound => acceptedList.includes(compound.name))
-        //     .map((compound, idx) => */}
-    
-        //     <SectionList
-        //       sections={[
-        //         {title: '', data: this.sectionListData(foodHash)},
-        //       ]}
-        //       renderItem={({item}) => <RecentMealItem compound = {item}/>}
-        //       renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>}
-        //       keyExtractor={(item, index) => index}
-        // />
-            
-            
-        //   </List.Accordion>
-          
-        )
+        ):null
         )
     }
 }

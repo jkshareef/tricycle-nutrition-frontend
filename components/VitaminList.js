@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, SectionList, StyleSheet} from 'react-native'
 import VitaminItem from './VitaminItem';
 import {acceptedList, acceptedHash} from '../helpers/acceptedList'
+import {Title} from 'react-native-paper';
 
 
 export default class VitaminList extends Component {
@@ -69,6 +70,7 @@ export default class VitaminList extends Component {
         }
       })
         return (
+          this.props.data?
         <View style={styles.container}>
         <SectionList
           sections={[
@@ -80,6 +82,7 @@ export default class VitaminList extends Component {
           keyExtractor={(item, index) => index}
         />
       </View>
+      :<View><Title style={{marginTop: 35}}>No Meals to Show</Title></View>
         )
     }
 }
