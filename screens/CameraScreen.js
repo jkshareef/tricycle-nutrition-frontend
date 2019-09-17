@@ -11,6 +11,7 @@ import {
   StyleSheet,
   Text,
   View,
+  Image,
   TouchableOpacity,
   Slider,
   Platform
@@ -25,6 +26,10 @@ import {
   MaterialCommunityIcons,
   Octicons
 } from "@expo/vector-icons";
+
+// const URL = "http://localhost:3000"
+const URL = "https://tricycle-nutrition.herokuapp.com";
+
 
 const landmarkSize = 2;
 
@@ -99,6 +104,21 @@ export default class CameraScreen extends React.Component {
     return ratios;
   };
 
+  getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem("jwt");
+      if (token !== null) {
+        // We have data!!
+        this.setState({ token: token });
+        return token;
+      } else {
+        null;
+      }
+    } catch (error) {
+      // Error retrieving data
+    }
+  };
+
   toggleView = () =>
     this.setState({ showGallery: !this.state.showGallery, newPhotos: false });
 
@@ -146,11 +166,22 @@ export default class CameraScreen extends React.Component {
   handleMountError = ({ message }) => console.error(message);
 
   onPictureSaved = async photo => {
-    await FileSystem.moveAsync({
-      from: photo.uri,
-      to: `${FileSystem.documentDirectory}photos/${Date.now()}.jpg`
-    });
-    this.setState({ newPhotos: true });
+    const token = await this.getToken();
+    const payload = {photo: photo}
+    const config = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + token
+      },
+      body: JSON.stringify(payload)
+    };
+    fetch(URL + "api/v1/photo/", config)
+    .then(resp => resp.json())
+    .then(json => {
+      
+      this.setState({ newPhotos: true, visionString: json , showPhoto: true});
+    })
   };
 
   onBarCodeScanned = code => {
@@ -417,6 +448,18 @@ export default class CameraScreen extends React.Component {
     </View>
   );
 
+  renderPhoto = () => {
+    <View style={{ flex: 1 }}>
+      <Image source={{
+            uri:
+              'data:image/jpg;base64, ' + this.state.visionString
+          }}/>
+          {this.renderTopBar()}
+          {this.renderBottomBar()}
+      </View>
+
+  }
+
   render() {
     const cameraScreenContent = this.state.permissionsGranted
       ? this.renderCamera()
@@ -424,7 +467,10 @@ export default class CameraScreen extends React.Component {
     const content = this.state.showGallery
       ? this.renderGallery()
       : cameraScreenContent;
-    return <View style={styles.container}>{content}</View>;
+    const visionPhoto = this.state.showPhoto
+    ? this.renderPhoto()
+    :cameraScreenContent;
+    return <View style={styles.container}>{visionPhoto}</View>;
   }
 }
 

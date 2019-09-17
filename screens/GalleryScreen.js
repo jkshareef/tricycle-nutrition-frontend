@@ -11,7 +11,8 @@ import { FileSystem, FaceDetector, MediaLibrary, Permissions } from "expo";
 import { MaterialIcons } from "@expo/vector-icons";
 import Photo from "./Photo";
 
-const URL = "https://tricycle-nutrition.herokuapp.com"
+
+// const URL = "https://tricycle-nutrition.herokuapp.com";
 const PHOTOS_DIR = FileSystem.documentDirectory + "photos";
 
 export default class GalleryScreen extends React.Component {
@@ -72,35 +73,6 @@ export default class GalleryScreen extends React.Component {
       alert("No photos to save!");
     }
   };
-
-//   amazonRekognition = async () => {
-//     const photos = this.state.selected;
-
-//     if (photos.length > 0) {
-//       const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-
-//       if (status !== "granted") {
-//         throw new Error("Denied CAMERA_ROLL permissions!");
-//       }
-
-//       const promises = photos.map(photoUri => {
-//         const token = await this.getToken()
-//         const config = {
-//             method: 'POST',
-//             headers: {
-//             "Content-Type": "application/json",
-//             Authorization: "Bearer " + token
-//           }
-//         };
-//         fetch(URL + 'api/v1/photo', config);
-//       });
-
-//       await Promise.all(promises);
-//       alert("Successfully saved photos to user's gallery!");
-//     } else {
-//       alert("No photos to save!");
-//     }
-//   }
 
   renderPhoto = fileName => (
     <Photo
