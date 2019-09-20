@@ -13,7 +13,7 @@ import RecentMeal from "../components/RecentMeal";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 // const URL = "http://localhost:3000"
-// const URL = "http://77b3767e.ngrok.io"
+// const URL = "http://9190836a.ngrok.io"
 const URL = "https://tricycle-nutrition.herokuapp.com";
 
 export default class HomeScreen extends Component {
@@ -48,6 +48,7 @@ export default class HomeScreen extends Component {
         Authorization: "Bearer " + token
       }
     };
+
     fetch(URL + "/api/v1/food/recent", config)
       .then(resp => resp.json())
       .then(json => {

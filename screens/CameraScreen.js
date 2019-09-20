@@ -14,7 +14,8 @@ import {
   Image,
   TouchableOpacity,
   Slider,
-  Platform
+  Platform,
+  AsyncStorage
 } from "react-native";
 import GalleryScreen from "./GalleryScreen";
 import { isIphoneX } from "react-native-iphone-x-helper";
@@ -28,8 +29,8 @@ import {
 } from "@expo/vector-icons";
 
 // const URL = "http://localhost:3000"
+// const URL = "http://9190836a.ngrok.io";
 const URL = "https://tricycle-nutrition.herokuapp.com";
-
 
 const landmarkSize = 2;
 
@@ -159,15 +160,20 @@ export default class CameraScreen extends React.Component {
 
   takePicture = () => {
     if (this.camera) {
-      this.camera.takePictureAsync({ onPictureSaved: this.onPictureSaved });
+      this.camera.takePictureAsync({
+        base64: true,
+        onPictureSaved: this.onPictureSaved
+      });
     }
   };
 
   handleMountError = ({ message }) => console.error(message);
 
+  
   onPictureSaved = async photo => {
     const token = await this.getToken();
-    const payload = {photo: photo}
+    const payload = { photo: photo };
+    console.log(token)
     const config = {
       method: "POST",
       headers: {
@@ -176,12 +182,14 @@ export default class CameraScreen extends React.Component {
       },
       body: JSON.stringify(payload)
     };
-    fetch(URL + "api/v1/photo/", config)
-    .then(resp => resp.json())
-    .then(json => {
-      
-      this.setState({ newPhotos: true, visionString: json , showPhoto: true});
-    })
+    
+    
+    fetch(URL + "/api/v1/photo/", config)
+      .then(resp => resp.json())
+      .then(json => {
+        this.setState({ newPhotos: true, visionString: json, showPhoto: true });
+      })
+      .catch(error => console.log("Error: ", error));
   };
 
   onBarCodeScanned = code => {
@@ -450,27 +458,26 @@ export default class CameraScreen extends React.Component {
 
   renderPhoto = () => {
     <View style={{ flex: 1 }}>
-      <Image source={{
-            uri:
-              'data:image/jpg;base64, ' + this.state.visionString
-          }}/>
-          {this.renderTopBar()}
-          {this.renderBottomBar()}
-      </View>
-
-  }
+      <Image
+        source={{
+          uri: "data:image/jpg;base64, " + this.state.visionString
+        }}
+      />
+    </View>;
+  };
 
   render() {
     const cameraScreenContent = this.state.permissionsGranted
       ? this.renderCamera()
       : this.renderNoPermissions();
-    const content = this.state.showGallery
-      ? this.renderGallery()
-      : cameraScreenContent;
-    const visionPhoto = this.state.showPhoto
-    ? this.renderPhoto()
-    :cameraScreenContent;
-    return <View style={styles.container}>{visionPhoto}</View>;
+
+    if (this.state.showGallery) {
+      return <View style={styles.container}>{this.renderGallery()}</View>;
+    } else if (this.state.showPhoto) {
+      return <View style={styles.container}>{this.renderPhoto()}</View>;
+    } else {
+      return <View style={styles.container}>{cameraScreenContent}</View>;
+    }
   }
 }
 

@@ -11,8 +11,8 @@ import { FileSystem, FaceDetector, MediaLibrary, Permissions } from "expo";
 import { MaterialIcons } from "@expo/vector-icons";
 import Photo from "./Photo";
 
-
-// const URL = "https://tricycle-nutrition.herokuapp.com";
+// const URL = "http://localhost:3000"
+const URL = "https://tricycle-nutrition.herokuapp.com";
 const PHOTOS_DIR = FileSystem.documentDirectory + "photos";
 
 export default class GalleryScreen extends React.Component {
