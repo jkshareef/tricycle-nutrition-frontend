@@ -29,7 +29,7 @@ import {
 } from "@expo/vector-icons";
 
 // const URL = "http://localhost:3000"
-// const URL = "http://9190836a.ngrok.io";
+// const URL = "https://9c268466.ngrok.io";
 const URL = "https://tricycle-nutrition.herokuapp.com";
 
 const landmarkSize = 2;
@@ -173,7 +173,7 @@ export default class CameraScreen extends React.Component {
   onPictureSaved = async photo => {
     const token = await this.getToken();
     const payload = { photo: photo };
-    console.log(token)
+  
     const config = {
       method: "POST",
       headers: {

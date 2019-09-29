@@ -10,6 +10,10 @@ export default class VitaminItem extends Component {
     };
   }
 
+  componentDidMount() {
+    this.graphData();
+  }
+
   handlePress = () => {
     this.setState({
       expanded: !this.state.expanded
@@ -50,6 +54,21 @@ export default class VitaminItem extends Component {
     return arr.join(" ");
   };
 
+  graphData = () => {
+    if (this.props.time === "week") {
+      this.props.graphData({
+        Vitamin: this.props.compound.name,
+        Percent:
+          (this.props.compound.amount.toFixed(2) / this.props.compound.rdv) * 7
+      });
+    } else if (this.props.time === "day") {
+      this.props.graphData({
+        Vitamin: this.props.compound.name,
+        Percent: this.props.compound.amount.toFixed(2) / this.props.compound.rdv
+      });
+    }
+  };
+
   render() {
     const compound = this.props.compound;
 
@@ -67,7 +86,6 @@ export default class VitaminItem extends Component {
             {compound.units} RDV
           </Text>
         )}
-
         {this.props.percentProgress(compound)}
         {this.state.expanded ? this.readLess() : this.readMore()}
       </View>
@@ -87,24 +105,3 @@ const styles = StyleSheet.create({
     backgroundColor: "#F6F4F3"
   }
 });
-
-// return (
-//     <List.Item
-//     key={index}
-//     title={compound.name}
-//     description={({
-//     color: descriptionColor,
-//     fontSize,
-//     }) => (
-//     <View>
-
-//     <Text
-//     numberOfLines={1}
-//     >
-//     {`${compound.amount}/${compound.rdv}${compound.units} RDV`}
-//     </Text>
-//     {this.props.percentProgress(compound)}
-//     {this.state.expanded? this.readLess() : this.readMore()}
-// </View>
-// )
-// />}

@@ -14,7 +14,7 @@ import * as Progress from "react-native-progress";
 import VitaminList from "../components/VitaminList";
 
 // const URL = "http://localhost:3000"
-// const URL = "http://9190836a.ngrok.io"
+// const URL = "https://9c268466.ngrok.io"
 const URL = "https://tricycle-nutrition.herokuapp.com";
 
 export default class WeeklyScreen extends Component {
@@ -22,7 +22,8 @@ export default class WeeklyScreen extends Component {
     super(props);
     this.state = {
       days: null,
-      compoundData: null
+      compoundData: null,
+      graphData: [],
     };
   }
 
@@ -136,6 +137,12 @@ export default class WeeklyScreen extends Component {
     }
   };
 
+  graphData = data => {
+    this.setState( state => ({
+      graphData: [...state.graphData, data]
+    }))
+  }
+
   render() {
     const styles = StyleSheet.create({
       container: {
@@ -187,11 +194,44 @@ export default class WeeklyScreen extends Component {
             showsVerticalScrollIndicator={false}
           >
             {this.state.compoundData ? (
+              <React.Fragment>
+                <VictoryChart
+                  // width={350}
+                  theme={VictoryTheme.material}
+                  domainPadding={20}
+                  containerComponent={
+                    <VictoryZoomContainer
+                      allowZoom={false}
+                      zoomDomain={{ x: [0, 5] }}
+                      zoomDimension="x"
+                    />
+                  }
+                >
+                  {/* <VictoryAxis
+                    // tickValues specifies both the number of ticks and where
+                    // they are placed on the axis
+                    tickValues={dataPoints(31)}
+                    tickFormat={chartNames}
+                    
+                  />
+                  <VictoryAxis
+                    dependentAxis
+                    // tickFormat specifies how ticks should be displayed
+                    tickFormat={x => `${x * 100}%`}
+                  /> */}
+                  <VictoryBar
+                    data={this.state.graphData}
+                    x="Vitamin"
+                    y="Percent"
+                  />
+                </VictoryChart>
               <VitaminList
                 time="week"
                 data={this.state.compoundData.total}
                 percentProgress={this.percentProgress}
+                graphData={this.graphData}
               />
+              </React.Fragment>
             ) : null}
 
             {/* <SectionList

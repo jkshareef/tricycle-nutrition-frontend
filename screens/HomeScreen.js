@@ -13,7 +13,7 @@ import RecentMeal from "../components/RecentMeal";
 import Icon from "react-native-vector-icons/FontAwesome";
 
 // const URL = "http://localhost:3000"
-// const URL = "http://9190836a.ngrok.io"
+// const URL = "https://9c268466.ngrok.io";
 const URL = "https://tricycle-nutrition.herokuapp.com";
 
 export default class HomeScreen extends Component {

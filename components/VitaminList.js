@@ -71,6 +71,7 @@ export default class VitaminList extends Component {
               time={this.props.time}
               compound={item}
               percentProgress={this.props.percentProgress}
+              graphData={this.props.graphData}
             />
           )}
           //   renderSectionHeader={({section}) => <Text style={styles.sectionHeader}>{section.title}</Text>

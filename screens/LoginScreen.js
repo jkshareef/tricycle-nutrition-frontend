@@ -11,7 +11,7 @@ import { createStackNavigator, createAppContainer } from "react-navigation";
 import { Appbar } from "react-native-paper";
 
 // const URL = "http://localhost:3000"
-// const URL = "http://9190836a.ngrok.io"
+// const URL = "https://9c268466.ngrok.io"
 const URL = "https://tricycle-nutrition.herokuapp.com";
 
 export default class LoginScreen extends Component {
