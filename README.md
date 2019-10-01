@@ -17,3 +17,7 @@ npm start
 From a mobile device, download the Expo App on either the Play Store or the App Store.
 
 Take a picture with your smart device of the QR code within the Expo Client browser on the computer to launch the app on your device.
+
+## Demo
+
+https://youtu.be/m7frTZwFAow
